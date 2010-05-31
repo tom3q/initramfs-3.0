@@ -1,0 +1,2 @@
+In file initrd.arm.initramfs_list we add the files that we want to get in initramfs (zImage)
+

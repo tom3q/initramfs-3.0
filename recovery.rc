@@ -1,0 +1,79 @@
+on init
+
+# S.LSI FIX : output console directly 
+#	export PATH /sbin
+        export PATH /sbin:/xbin:/system/sbin:/system/bin:/system/xbin
+        export LD_LIBRARY_PATH /xbin/lib:/system/lib:/system/lib/egl
+
+	export ANDROID_DATA /data
+	export EXTERNAL_STORAGE /sdcard
+
+	symlink /system/etc /etc
+
+	mkdir /xbin
+	mkdir /sdcard
+	mkdir /system
+	mkdir /data
+	mkdir /cache
+        mount tmpfs nodev /tmp
+ 
+# S.LSI FIX START: output console directly 
+        insmod /lib/modules/xsr.ko
+        insmod /lib/modules/xsr_stl.ko
+        insmod /lib/modules/dpram.ko
+ 
+        insmod /lib/modules/rfs.ko
+#       insmod /lib/modules/yaffs2.ko
+        insmod /lib/modules/param.ko 
+
+#    	insmod /lib/modules/multipdp.ko
+#    	insmod /lib/modules/s3c_mfc.ko
+#    	insmod /lib/modules/s3c_g2d_driver.ko
+#    	insmod /lib/modules/s3c_pp.ko
+#    	insmod /lib/modules/s3c_jpeg.ko
+#    	insmod /lib/modules/s3c_cmm.ko
+	 
+        mkdir /sdcard 0000 system system
+        mkdir /system
+        mkdir /data 0771 system system
+        mkdir /cache 0770 system cache
+ 
+        chmod 0666 /dev/bml8
+
+        #mount yaffs2 /dev/bml5 /system
+#    	mount rfs /dev/stl6 /system xattr,check=no
+
+	# for multiCSC, From Kim SiWan (siwan10.kim@samsung.com)
+    	#mount rfs /dev/stl10 /efs nosuid nodev xattr,check=no
+# S.LSI FIX END
+
+        # /xbin (busybox)
+        mount squashfs /dev/bml8 /xbin ro loop
+
+# Mod version
+	setprop ro.modversion "LK based on CM v1.4 + JF"
+
+on boot
+        write /sys/class/sec/switch/uart_sel MODEM
+        write /sys/class/sec/switch/usb_sel PDA
+
+  	ifup lo
+	hostname localhost
+	domainname localdomain
+
+	class_start default
+
+# S.LSI FIX START: output console directly 
+        service console /sbin/ash
+	        console
+# S.LSI FIX END
+
+	service recovery /sbin/recovery
+
+	service adbd /sbin/adbd2 recovery
+
+	on property:persist.service.adb.enable=1
+	start adbd
+
+	on property:persist.service.adb.enable=0
+	stop adbd
