@@ -20,7 +20,7 @@ loglevel 3
     symlink /sys/kernel/debug /d
 
 # Kernel version
-    setprop ro.build.display.id "LK2.05.2 / SamdroidMod 1.2.x [samdroid.net]"
+    setprop ro.build.display.id "LK2.06.beta1 / SamdroidMod 1.2.x [samdroid.net]"
 
 # insert modules
 #ifdef SLSI_S3C6410
