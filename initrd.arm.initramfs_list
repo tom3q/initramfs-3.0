@@ -30,8 +30,7 @@ file /recovery.rc /home/leshak/i5700.2/initramfs/recovery.rc 0644 0 0
 file /recovery_hardkey.rc /home/leshak/i5700.2/initramfs/recovery_hardkey.rc 0644 0 0
 file /init /home/leshak/i5700.2/initramfs/init 0755 0 0
 dir /sbin 0755 0 0
-file /sbin/su1 /home/leshak/i5700.2/initramfs/sbin/su1 4755 0 0
-file /sbin/su2 /home/leshak/i5700.2/initramfs/sbin/su2 4755 0 0
+file /sbin/su /home/leshak/i5700.2/initramfs/sbin/su 6755 0 0
 file /sbin/recovery /home/leshak/i5700.2/initramfs/sbin/recovery 0755 0 0
 file /sbin/adbd /home/leshak/i5700.2/initramfs/sbin/adbd 0755 0 0
 file /sbin/adbd2 /home/leshak/i5700.2/initramfs/sbin/adbd2 0755 0 0
