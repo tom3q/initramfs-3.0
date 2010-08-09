@@ -1,75 +1,75 @@
 dir /lib 0755 0 0
 dir /lib/modules 0755 0 0
-file /lib/modules/crc32.ko /home/leshak/i5700.2/initramfs/lib/modules/crc32.ko 0644 0 0
-file /lib/modules/dhd.ko /home/leshak/i5700.2/initramfs/lib/modules/dhd.ko 0644 0 0
-file /lib/modules/rfs.ko /home/leshak/i5700.2/initramfs/lib/modules/rfs.ko 0644 0 0
-file /lib/modules/s3c_g3d.ko /home/leshak/i5700.2/initramfs/lib/modules/s3c_g3d.ko 0644 0 0
-file /lib/modules/s3c_cmm.ko /home/leshak/i5700.2/initramfs/lib/modules/s3c_cmm.ko 0644 0 0
-file /lib/modules/s3c_camera.ko /home/leshak/i5700.2/initramfs/lib/modules/s3c_camera.ko 0644 0 0
-file /lib/modules/stgloc /home/leshak/i5700.2/initramfs/lib/modules/stgloc 0644 0 0
-file /lib/modules/dpram.ko /home/leshak/i5700.2/initramfs/lib/modules/dpram.ko 0644 0 0
-file /lib/modules/s3c_rotator.ko /home/leshak/i5700.2/initramfs/lib/modules/s3c_rotator.ko 0644 0 0
-file /lib/modules/xsr_stl.ko /home/leshak/i5700.2/initramfs/lib/modules/xsr_stl.ko 0644 0 0
-file /lib/modules/s3c_jpeg.ko /home/leshak/i5700.2/initramfs/lib/modules/s3c_jpeg.ko 0644 0 0
-file /lib/modules/s3c_g2d_driver.ko /home/leshak/i5700.2/initramfs/lib/modules/s3c_g2d_driver.ko 0644 0 0
-file /lib/modules/param.ko /home/leshak/i5700.2/initramfs/lib/modules/param.ko 0644 0 0
-file /lib/modules/xsr.ko /home/leshak/i5700.2/initramfs/lib/modules/xsr.ko 0644 0 0
-file /lib/modules/multipdp.ko /home/leshak/i5700.2/initramfs/lib/modules/multipdp.ko 0644 0 0
-file /lib/modules/s3c_pp.ko /home/leshak/i5700.2/initramfs/lib/modules/s3c_pp.ko 0644 0 0
-file /lib/modules/s3c_mfc.ko /home/leshak/i5700.2/initramfs/lib/modules/s3c_mfc.ko 0644 0 0
-file /lib/modules/vibrator.ko /home/leshak/i5700.2/initramfs/lib/modules/vibrator.ko 0644 0 0
-file /lib/modules/xsr_debug.ko /home/leshak/i5700.2/initramfs/lib/modules/xsr_debug.ko 0644 0 0
-file /lib/modules/bnep.ko /home/leshak/i5700.2/initramfs/lib/modules/bnep.ko 0644 0 0
-file /lib/modules/tun.ko /home/leshak/i5700.2/initramfs/lib/modules/tun.ko 0644 0 0
-file /lib/modules/cifs.ko /home/leshak/i5700.2/initramfs/lib/modules/cifs.ko 0644 0 0
-file /init.rc /home/leshak/i5700.2/initramfs/init.rc 0644 0 0
+file /lib/modules/crc32.ko /home/leshak/i5700/linux/initramfs/lib/modules/crc32.ko 0644 0 0
+file /lib/modules/dhd.ko /home/leshak/i5700/linux/initramfs/lib/modules/dhd.ko 0644 0 0
+file /lib/modules/rfs.ko /home/leshak/i5700/linux/initramfs/lib/modules/rfs.ko 0644 0 0
+file /lib/modules/s3c_g3d.ko /home/leshak/i5700/linux/initramfs/lib/modules/s3c_g3d.ko 0644 0 0
+file /lib/modules/s3c_cmm.ko /home/leshak/i5700/linux/initramfs/lib/modules/s3c_cmm.ko 0644 0 0
+file /lib/modules/s3c_camera.ko /home/leshak/i5700/linux/initramfs/lib/modules/s3c_camera.ko 0644 0 0
+file /lib/modules/stgloc /home/leshak/i5700/linux/initramfs/lib/modules/stgloc 0644 0 0
+file /lib/modules/dpram.ko /home/leshak/i5700/linux/initramfs/lib/modules/dpram.ko 0644 0 0
+file /lib/modules/s3c_rotator.ko /home/leshak/i5700/linux/initramfs/lib/modules/s3c_rotator.ko 0644 0 0
+file /lib/modules/xsr_stl.ko /home/leshak/i5700/linux/initramfs/lib/modules/xsr_stl.ko 0644 0 0
+file /lib/modules/s3c_jpeg.ko /home/leshak/i5700/linux/initramfs/lib/modules/s3c_jpeg.ko 0644 0 0
+file /lib/modules/s3c_g2d_driver.ko /home/leshak/i5700/linux/initramfs/lib/modules/s3c_g2d_driver.ko 0644 0 0
+file /lib/modules/param.ko /home/leshak/i5700/linux/initramfs/lib/modules/param.ko 0644 0 0
+file /lib/modules/xsr.ko /home/leshak/i5700/linux/initramfs/lib/modules/xsr.ko 0644 0 0
+file /lib/modules/multipdp.ko /home/leshak/i5700/linux/initramfs/lib/modules/multipdp.ko 0644 0 0
+file /lib/modules/s3c_pp.ko /home/leshak/i5700/linux/initramfs/lib/modules/s3c_pp.ko 0644 0 0
+file /lib/modules/s3c_mfc.ko /home/leshak/i5700/linux/initramfs/lib/modules/s3c_mfc.ko 0644 0 0
+file /lib/modules/vibrator.ko /home/leshak/i5700/linux/initramfs/lib/modules/vibrator.ko 0644 0 0
+file /lib/modules/xsr_debug.ko /home/leshak/i5700/linux/initramfs/lib/modules/xsr_debug.ko 0644 0 0
+file /lib/modules/bnep.ko /home/leshak/i5700/linux/initramfs/lib/modules/bnep.ko 0644 0 0
+file /lib/modules/tun.ko /home/leshak/i5700/linux/initramfs/lib/modules/tun.ko 0644 0 0
+file /lib/modules/cifs.ko /home/leshak/i5700/linux/initramfs/lib/modules/cifs.ko 0644 0 0
+file /init.rc /home/leshak/i5700/linux/initramfs/init.rc 0644 0 0
 slink /etc /system/etc 0777 0 0
 dir /sys 0755 0 0
-file /sys/stgloc /home/leshak/i5700.2/initramfs/sys/stgloc 0644 0 0
-file /recovery.rc /home/leshak/i5700.2/initramfs/recovery.rc 0644 0 0
-file /recovery_hardkey.rc /home/leshak/i5700.2/initramfs/recovery_hardkey.rc 0644 0 0
-file /init /home/leshak/i5700.2/initramfs/init 0755 0 0
+file /sys/stgloc /home/leshak/i5700/linux/initramfs/sys/stgloc 0644 0 0
+file /recovery.rc /home/leshak/i5700/linux/initramfs/recovery.rc 0644 0 0
+file /recovery_hardkey.rc /home/leshak/i5700/linux/initramfs/recovery_hardkey.rc 0644 0 0
+file /init /home/leshak/i5700/linux/initramfs/init 0755 0 0
 dir /sbin 0755 0 0
-file /sbin/su /home/leshak/i5700.2/initramfs/sbin/su 6755 0 0
-file /sbin/recovery /home/leshak/i5700.2/initramfs/sbin/recovery 0755 0 0
-file /sbin/adbd /home/leshak/i5700.2/initramfs/sbin/adbd 0755 0 0
-file /sbin/adbd2 /home/leshak/i5700.2/initramfs/sbin/adbd2 0755 0 0
-file /sbin/ash /home/leshak/i5700.2/initramfs/sbin/ash 0755 0 0
+file /sbin/su /home/leshak/i5700/linux/initramfs/sbin/su 6755 0 0
+file /sbin/recovery /home/leshak/i5700/linux/initramfs/sbin/recovery 0755 0 0
+file /sbin/adbd /home/leshak/i5700/linux/initramfs/sbin/adbd 0755 0 0
+file /sbin/adbd2 /home/leshak/i5700/linux/initramfs/sbin/adbd2 0755 0 0
+file /sbin/ash /home/leshak/i5700/linux/initramfs/sbin/ash 0755 0 0
 dir /res 0755 0 0
 dir /res/images 0755 0 0
-file /res/images/indeterminate1.png /home/leshak/i5700.2/initramfs/res/images/indeterminate1.png 0644 0 0
-file /res/images/indeterminate2.png /home/leshak/i5700.2/initramfs/res/images/indeterminate2.png 0644 0 0
-file /res/images/indeterminate3.png /home/leshak/i5700.2/initramfs/res/images/indeterminate3.png 0644 0 0
-file /res/images/indeterminate4.png /home/leshak/i5700.2/initramfs/res/images/indeterminate4.png 0644 0 0
-file /res/images/indeterminate5.png /home/leshak/i5700.2/initramfs/res/images/indeterminate5.png 0644 0 0
-file /res/images/indeterminate6.png /home/leshak/i5700.2/initramfs/res/images/indeterminate6.png 0644 0 0
-file /res/images/icon_firmware_install.png /home/leshak/i5700.2/initramfs/res/images/icon_firmware_install.png 0644 0 0
-file /res/images/icon_error.png /home/leshak/i5700.2/initramfs/res/images/icon_error.png 0644 0 0
-file /res/images/icon_installing.png /home/leshak/i5700.2/initramfs/res/images/icon_installing.png 0644 0 0
-file /res/images/icon_firmware_error.png /home/leshak/i5700.2/initramfs/res/images/icon_firmware_error.png 0644 0 0
-file /res/images/progress_bar_empty_right_round.png /home/leshak/i5700.2/initramfs/res/images/progress_bar_empty_right_round.png 0644 0 0
-file /res/images/progress_bar_fill.png /home/leshak/i5700.2/initramfs/res/images/progress_bar_fill.png 0644 0 0
-file /res/images/progress_bar_empty.png /home/leshak/i5700.2/initramfs/res/images/progress_bar_empty.png 0644 0 0
-file /res/images/progress_bar_right_round.png /home/leshak/i5700.2/initramfs/res/images/progress_bar_right_round.png 0644 0 0
-file /res/images/progress_bar_left_round.png /home/leshak/i5700.2/initramfs/res/images/progress_bar_left_round.png 0644 0 0
-file /res/images/progress_bar_empty_left_round.png /home/leshak/i5700.2/initramfs/res/images/progress_bar_empty_left_round.png 0644 0 0
+file /res/images/indeterminate1.png /home/leshak/i5700/linux/initramfs/res/images/indeterminate1.png 0644 0 0
+file /res/images/indeterminate2.png /home/leshak/i5700/linux/initramfs/res/images/indeterminate2.png 0644 0 0
+file /res/images/indeterminate3.png /home/leshak/i5700/linux/initramfs/res/images/indeterminate3.png 0644 0 0
+file /res/images/indeterminate4.png /home/leshak/i5700/linux/initramfs/res/images/indeterminate4.png 0644 0 0
+file /res/images/indeterminate5.png /home/leshak/i5700/linux/initramfs/res/images/indeterminate5.png 0644 0 0
+file /res/images/indeterminate6.png /home/leshak/i5700/linux/initramfs/res/images/indeterminate6.png 0644 0 0
+file /res/images/icon_firmware_install.png /home/leshak/i5700/linux/initramfs/res/images/icon_firmware_install.png 0644 0 0
+file /res/images/icon_error.png /home/leshak/i5700/linux/initramfs/res/images/icon_error.png 0644 0 0
+file /res/images/icon_installing.png /home/leshak/i5700/linux/initramfs/res/images/icon_installing.png 0644 0 0
+file /res/images/icon_firmware_error.png /home/leshak/i5700/linux/initramfs/res/images/icon_firmware_error.png 0644 0 0
+file /res/images/progress_bar_empty_right_round.png /home/leshak/i5700/linux/initramfs/res/images/progress_bar_empty_right_round.png 0644 0 0
+file /res/images/progress_bar_fill.png /home/leshak/i5700/linux/initramfs/res/images/progress_bar_fill.png 0644 0 0
+file /res/images/progress_bar_empty.png /home/leshak/i5700/linux/initramfs/res/images/progress_bar_empty.png 0644 0 0
+file /res/images/progress_bar_right_round.png /home/leshak/i5700/linux/initramfs/res/images/progress_bar_right_round.png 0644 0 0
+file /res/images/progress_bar_left_round.png /home/leshak/i5700/linux/initramfs/res/images/progress_bar_left_round.png 0644 0 0
+file /res/images/progress_bar_empty_left_round.png /home/leshak/i5700/linux/initramfs/res/images/progress_bar_empty_left_round.png 0644 0 0
 dir /system 0755 0 0
 dir /system/etc 0755 0 0
-file /system/etc/ld.so.cache /home/leshak/i5700.2/initramfs/system/etc/ld.so.cache 0644 0 0
+file /system/etc/ld.so.cache /home/leshak/i5700/linux/initramfs/system/etc/ld.so.cache 0644 0 0
 dir /proc 0755 0 0
-file /proc/stgloc /home/leshak/i5700.2/initramfs/proc/stgloc 0644 0 0
+file /proc/stgloc /home/leshak/i5700/linux/initramfs/proc/stgloc 0644 0 0
 dir /dev 0755 0 0
-file /dev/stgloc /home/leshak/i5700.2/initramfs/dev/stgloc 0644 0 0
+file /dev/stgloc /home/leshak/i5700/linux/initramfs/dev/stgloc 0644 0 0
 dir /tmp 0755 0 0
-file /tmp/s3c-keypad-rev0020.kl /home/leshak/i5700.2/initramfs/tmp/s3c-keypad-rev0020.kl 0644 0 0
-file /tmp/s3c-keypad-rev0000.kcm.bin /home/leshak/i5700.2/initramfs/tmp/s3c-keypad-rev0000.kcm.bin 0666 0 0
-file /tmp/s3c-keypad-rev0020.kcm.bin /home/leshak/i5700.2/initramfs/tmp/s3c-keypad-rev0020.kcm.bin 0666 0 0
-file /tmp/s3c-keypad-rev0000.kl /home/leshak/i5700.2/initramfs/tmp/s3c-keypad-rev0000.kl 0644 0 0
-file /tmp/s3c-keypad-rev0010.kl /home/leshak/i5700.2/initramfs/tmp/s3c-keypad-rev0010.kl 0644 0 0
+file /tmp/s3c-keypad-rev0020.kl /home/leshak/i5700/linux/initramfs/tmp/s3c-keypad-rev0020.kl 0644 0 0
+file /tmp/s3c-keypad-rev0000.kcm.bin /home/leshak/i5700/linux/initramfs/tmp/s3c-keypad-rev0000.kcm.bin 0666 0 0
+file /tmp/s3c-keypad-rev0020.kcm.bin /home/leshak/i5700/linux/initramfs/tmp/s3c-keypad-rev0020.kcm.bin 0666 0 0
+file /tmp/s3c-keypad-rev0000.kl /home/leshak/i5700/linux/initramfs/tmp/s3c-keypad-rev0000.kl 0644 0 0
+file /tmp/s3c-keypad-rev0010.kl /home/leshak/i5700/linux/initramfs/tmp/s3c-keypad-rev0010.kl 0644 0 0
 dir /tmp/bootchart 0755 0 0
-file /tmp/bootchart/stgloc /home/leshak/i5700.2/initramfs/tmp/bootchart/stgloc 0644 0 0
-file /tmp/sec_headset.kl /home/leshak/i5700.2/initramfs/tmp/sec_headset.kl 0755 0 0
-file /tmp/s3c-keypad-rev0010.kcm.bin /home/leshak/i5700.2/initramfs/tmp/s3c-keypad-rev0010.kcm.bin 0666 0 0
-file /fota.rc /home/leshak/i5700.2/initramfs/fota.rc 0644 0 0
-file /default.prop /home/leshak/i5700.2/initramfs/default.prop 0644 0 0
-file /init.GT-I5700.rc /home/leshak/i5700.2/initramfs/init.GT-I5700.rc 0644 0 0
+file /tmp/bootchart/stgloc /home/leshak/i5700/linux/initramfs/tmp/bootchart/stgloc 0644 0 0
+file /tmp/sec_headset.kl /home/leshak/i5700/linux/initramfs/tmp/sec_headset.kl 0755 0 0
+file /tmp/s3c-keypad-rev0010.kcm.bin /home/leshak/i5700/linux/initramfs/tmp/s3c-keypad-rev0010.kcm.bin 0666 0 0
+file /fota.rc /home/leshak/i5700/linux/initramfs/fota.rc 0644 0 0
+file /default.prop /home/leshak/i5700/linux/initramfs/default.prop 0644 0 0
+file /init.GT-I5700.rc /home/leshak/i5700/linux/initramfs/init.GT-I5700.rc 0644 0 0
