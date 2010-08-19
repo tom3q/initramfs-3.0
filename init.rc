@@ -247,7 +247,11 @@ on boot
 
     write /proc/sys/vm/overcommit_memory 1
     write /proc/sys/vm/min_free_order_shift 4
-    write /sys/module/lowmemorykiller/parameters/minfree 1536,2048,4096,5120,5632,6144
+    # standart android
+    # write /sys/module/lowmemorykiller/parameters/minfree 1536,2048,4096,5120,5632,6144
+
+    # tunning
+    write /sys/module/lowmemorykiller/parameters/minfree 1536,2048,4096,5120,15360,23040
 
     # Set init its forked children's oom_adj.
     write /proc/1/oom_adj -16
@@ -391,12 +395,12 @@ service nexus /system/bin/nexus
 
 # to enable wifi
 service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c/data/misc/wifi/bcm_supp.conf
-   disabled
-   oneshot
+    disabled
+    oneshot
 
 service dhcpcd /system/bin/dhcpcd -BKL eth0
-   disabled
-   oneshot
+    disabled
+    oneshot
 
 service ifcfg_eth0 /system/bin/ifconfig eth0 up
     disabled
@@ -420,8 +424,8 @@ service ril-daemon /system/bin/rild
 service DR-daemon /system/bin/drexe
 	user root
 
-service mobex-daemon /system/bin/npsmobex
-	user root 
+#service mobex-daemon /system/bin/npsmobex
+#	user root 
 
 service zygote /system/bin/app_process -Xzygote /system/bin --zygote --start-system-server
     socket zygote stream 666
