@@ -41,7 +41,7 @@ on init
         chmod 0666 /dev/bml8
 
         #mount yaffs2 /dev/bml5 /system
-#    	mount rfs /dev/stl6 /system xattr,check=no
+    	mount rfs /dev/stl6 /system xattr,check=no
 
 	# for multiCSC, From Kim SiWan (siwan10.kim@samsung.com)
     	#mount rfs /dev/stl10 /efs nosuid nodev xattr,check=no
