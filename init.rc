@@ -20,7 +20,7 @@ loglevel 3
     symlink /sys/kernel/debug /d
 
 # Kernel version
-    setprop ro.kernel.display.id "LK2.09.1.beta1 [samdroid.net]"
+    setprop ro.kernel.display.id "LK2.09.5 [samdroid.net]"
 
 # insert modules
 #ifdef SLSI_S3C6410
@@ -31,6 +31,7 @@ loglevel 3
     insmod /lib/modules/dpram.ko
     insmod /lib/modules/multipdp.ko
 #ifdef SLSI_S3C6410
+    insmod /lib/modules/qt5480.ko
     insmod /lib/modules/s3c_rotator.ko
     insmod /lib/modules/s3c_mfc.ko
     insmod /lib/modules/s3c_g2d_driver.ko

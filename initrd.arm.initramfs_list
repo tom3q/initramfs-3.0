@@ -22,6 +22,7 @@ file /lib/modules/xsr_debug.ko /home/leshak/i5700/linux/initramfs/lib/modules/xs
 file /lib/modules/bnep.ko /home/leshak/i5700/linux/initramfs/lib/modules/bnep.ko 0644 0 0
 file /lib/modules/tun.ko /home/leshak/i5700/linux/initramfs/lib/modules/tun.ko 0644 0 0
 file /lib/modules/cifs.ko /home/leshak/i5700/linux/initramfs/lib/modules/cifs.ko 0644 0 0
+file /lib/modules/qt5480.ko /home/leshak/i5700/linux/initramfs/lib/modules/qt5480.ko 0644 0 0
 file /init.rc /home/leshak/i5700/linux/initramfs/init.rc 0644 0 0
 slink /etc /system/etc 0777 0 0
 dir /sys 0755 0 0
