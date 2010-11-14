@@ -1,0 +1,9 @@
+#!/system/bin/sh
+    case $1 in
+        ro )
+			mount -o remount,ro /system;;			
+        rw )
+			mount -o remount,rw /system;;
+        * )
+            echo "Usage: $0 ro|rw";;
+    esac
