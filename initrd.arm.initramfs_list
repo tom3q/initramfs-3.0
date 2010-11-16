@@ -23,6 +23,8 @@ file /lib/modules/bnep.ko /Volumes/dev/i5700/linux/initramfs/lib/modules/bnep.ko
 file /lib/modules/tun.ko /Volumes/dev/i5700/linux/initramfs/lib/modules/tun.ko 0644 0 0
 file /lib/modules/cifs.ko /Volumes/dev/i5700/linux/initramfs/lib/modules/cifs.ko 0644 0 0
 file /lib/modules/qt5480.ko /Volumes/dev/i5700/linux/initramfs/lib/modules/qt5480.ko 0644 0 0
+file /lib/modules/qt5480st.ko /Volumes/dev/i5700/linux/initramfs/lib/modules/qt5480st.ko 0644 0 0
+file /lib/modules/qt5480mt1.ko /Volumes/dev/i5700/linux/initramfs/lib/modules/qt5480mt1.ko 0644 0 0
 file /init.rc /Volumes/dev/i5700/linux/initramfs/init.rc 0644 0 0
 slink /etc /system/etc 0777 0 0
 dir /sys 0755 0 0
