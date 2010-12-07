@@ -9,18 +9,19 @@ loglevel 3
     export PATH /sbin:/system/sbin:/system/bin:/system/xbin:/xbin
     export LD_LIBRARY_PATH /system/lib:/system/lib/egl
     export ANDROID_BOOTLOGO 1
+    export ANDROID_CACHE /cache
     export ANDROID_ROOT /system
     export ANDROID_ASSETS /system/app
     export ANDROID_DATA /data
-    export EXTERNAL_STORAGE /sdcard
+    export EXTERNAL_STORAGE /mnt/sdcard
+    export ASEC_MOUNTPOINT /mnt/asec
+    export SD_EXT_DIRECTORY /sd-ext
     export BOOTCLASSPATH /system/framework/core.jar:/system/framework/ext.jar:/system/framework/framework.jar:/system/framework/android.policy.jar:/system/framework/services.jar
+    export TERMINFO /system/etc/terminfo
 
 # Backward compatibility
     symlink /system/etc /etc
     symlink /sys/kernel/debug /d
-
-# Kernel version
-    setprop ro.kernel.display.id "LK2.10.b2 [samdroid.net]"
 
 # insert modules
 #ifdef SLSI_S3C6410
@@ -31,7 +32,6 @@ loglevel 3
     insmod /lib/modules/dpram.ko
     insmod /lib/modules/multipdp.ko
 #ifdef SLSI_S3C6410
-    insmod /lib/modules/qt5480.ko
     insmod /lib/modules/s3c_rotator.ko
     insmod /lib/modules/s3c_mfc.ko
     insmod /lib/modules/s3c_g2d_driver.ko
@@ -43,31 +43,58 @@ loglevel 3
 #endif /* SLSI_S3C6410 */
     insmod /lib/modules/vibrator.ko
     insmod /lib/modules/param.ko
+    insmod /lib/modules/qt5480.ko
+
+# create mountpoints
+    mkdir /mnt 0775 root system
+    mkdir /mnt/sdcard 0000 system system
+
+# Create cgroup mount point for cpu accounting
+    mkdir /acct
+    mount cgroup none /acct cpuacct
+    mkdir /acct/uid
+
+# Backwards Compat - XXX: Going away in G*
+    symlink /mnt/sdcard /sdcard
 
 # create mountpoints and mount tmpfs on sqlite_stmt_journals
-    mkdir /sdcard 0000 system system
     mkdir /xbin
     mkdir /system
     mkdir /data 0771 system system
-    mkdir /cache 0777 system cache
+    mkdir /cache 0770 system cache
     mkdir /config 0500 root root
     mkdir /sqlite_stmt_journals 01777 root root
     mount tmpfs tmpfs /sqlite_stmt_journals size=4m
 
-    #mount rootfs rootfs / ro remount
+    # Directory for putting things only root should see.
+    mkdir /mnt/secure 0700 root root
+
+    # Directory for staging bindmounts
+    mkdir /mnt/secure/staging 0700 root root
+
+    # Directory-target for where the secure container
+    # imagefile directory will be bind-mounted
+    mkdir /mnt/secure/asec  0700 root root
+
+    # Secure container public mount points.
+    mkdir /mnt/asec  0700 root system
+    mount tmpfs tmpfs /mnt/asec mode=0755,gid=1000
+    
+    mkdir /sd-ext 0771 system system
 
     write /proc/sys/kernel/panic_on_oops 1
     write /proc/sys/kernel/hung_task_timeout_secs 0
     write /proc/cpu/alignment 4
-    write /proc/sys/kernel/sched_latency_ns 10000000
-    write /proc/sys/kernel/sched_wakeup_granularity_ns 2000000
+    write /proc/sys/kernel/sched_latency_ns 4000000
+    write /proc/sys/kernel/sched_wakeup_granularity_ns 1000000
+    write /proc/sys/kernel/sched_min_granularity_ns 800000
     write /proc/sys/kernel/sched_compat_yield 1
     write /proc/sys/kernel/sched_child_runs_first 0
 
 # Create cgroup mount points for process groups
     mkdir /dev/cpuctl
     mount cgroup none /dev/cpuctl cpu
-    chown sytem system /dev/cpuctl
+    chown system system /dev/cpuctl
     chown system system /dev/cpuctl/tasks
     chmod 0777 /dev/cpuctl/tasks
     write /dev/cpuctl/cpu.shares 1024
@@ -85,19 +112,14 @@ loglevel 3
 
 # mount mtd partitions
     # Mount /system rw first to give the filesystem a chance to save a checkpoint
+    # mount yaffs2 mtd@system /system 
+    # mount yaffs2 mtd@system /system ro remount
     mount rfs /dev/stl6 /system ro xattr,check=no
     mount ext2 /dev/stl6 /system ro nosuid nodev noatime nodiratime
-    mount ext4 /dev/stl6 /system nosuid nodev noatime nodiratime data=ordered
-
-    # Same reason as /data above
-    mount rfs /dev/stl7 /cache nosuid nodev xattr,check=no
-    mount ext2 /dev/stl7 /cache nosuid nodev noatime nodiratime
-    mount ext4 /dev/stl7 /cache nosuid nodev noatime nodiratime data=ordered
-    
-    chown system cache /cache
-    chmod 0777 /cache
 
     # We chown/chmod /data again so because mount is run as root + defaults
+    # mount yaffs2 mtd@userdata /data nosuid nodev
+    # mount yaffs2 /dev/bml6 /data nosuid nodev
     mount rfs /dev/stl5 /data nosuid nodev xattr,check=no
     mount ext2 /dev/stl5 /data nosuid nodev noatime nodiratime
     mount ext4 /dev/stl5 /data nosuid nodev noatime nodiratime data=ordered
@@ -131,14 +153,22 @@ loglevel 3
     chown root log /data/dontpanic/last_kmsg
     chmod 0640 /data/dontpanic/last_kmsg
 
+    # Same reason as /data above
+    # mount yaffs2 mtd@cache /cache nosuid nodev
+    mount rfs /dev/stl7 /cache nosuid nodev xattr,check=no
+    mount ext2 /dev/stl7 /cache nosuid nodev noatime nodiratime
+    chown system cache /cache
+    chmod 0770 /cache
 
     # We chown/chmod /efs again so because mount is run as root + defaults
+    # mount yaffs2 mtd@userdata /data nosuid nodev
+    #mount yaffs2 /dev/bml10 /efs nosuid nodev
     mount rfs /dev/stl10 /efs nosuid nodev xattr,check=no
     chown radio radio /efs
     chmod 0770 /efs
 
     # This may have been created by the recovery system with odd permissions
-    chown system system /cache/recovery
+    chown system cache /cache/recovery
     chmod 0770 /cache/recovery
 
     #change permissions on vmallocinfo so we can grab it from bugreports
@@ -164,13 +194,15 @@ loglevel 3
 # create basic filesystem structure
     mkdir /data/misc 01771 system misc
     mkdir /data/misc/bluetoothd 0770 bluetooth bluetooth
+    mkdir /data/misc/bluetooth 0770 bluetooth bluetooth
     mkdir /data/misc/keystore 0700 keystore keystore
     mkdir /data/misc/vpn 0770 system system
+    mkdir /data/misc/systempkeys 0700 system system
     mkdir /data/misc/vpn/profiles 0770 system system
     # give system access to wpa_supplicant.conf for backup and restore
-#    mkdir /data/misc/wifi 0770 wifi wifi
-#    chmod 0770 /data/misc/wifi
-#    chmod 0660 /data/misc/wifi/wpa_supplicant.conf
+    mkdir /data/misc/wifi 0770 wifi wifi
+    chmod 0770 /data/misc/wifi
+    chmod 0660 /data/misc/wifi/wpa_supplicant.conf
     mkdir /data/local 0771 shell shell
     mkdir /data/local/tmp 0771 shell shell
     mkdir /data/data 0771 system system
@@ -178,7 +210,10 @@ loglevel 3
     mkdir /data/app 0771 system system
     mkdir /data/property 0700 root root
 
-    # create log system 
+# for AppsOnSD keystore
+    mkdir /data/misc/systemkeys 700 system system
+
+# create log system 
     mkdir /data/log  0777 root root 
     chmod 0777 /data/log
 
@@ -196,6 +231,11 @@ loglevel 3
     chmod 0770 /data/lost+found
     chown root root /cache/lost+found
     chmod 0770 /cache/lost+found
+    
+    # create dalvik-cache folder on /cache
+    mkdir /cache/dalvik-cache 0771 system system
+    chown system system /cache/dalvik-cache
+    chmod 0777 /cache/dalvik-cache
 
 # to enable wifi
     setprop wifi.interface "eth0"
@@ -211,6 +251,37 @@ loglevel 3
 #    mkdir /data/misc/wifi/cert/as 0777 wifi wifi
 #    mkdir /data/misc/wifi/cert/user 0777 wifi wifi
 # end of wifi
+
+    symlink /dev/snd/pcmC0D0c /dev/pcmC0D0c
+    symlink /dev/snd/pcmC0D0p /dev/pcmC0D0p
+    symlink /dev/snd/controlC0 /dev/controlC0
+    symlink /dev/snd/timer /dev/timer
+    chmod 0777 /dev/pcmC0D0c
+    chmod 0777 /dev/pcmC0D0p
+    chmod 0777 /dev/controlC0
+    chmod 0777 /dev/timer
+    chown root audio /dev/snd/controlC0
+    chown root audio /dev/snd/pcmC0D0c
+    chown root audio /dev/snd/pcmC0D0p
+    chown root audio /dev/snd/timer
+
+    setprop alsa.mixer.playback.master "Output Volume - SPK/EAR"
+    setprop alsa.mixer.playback.earpiece "Output Volume - RCV"
+    setprop alsa.mixer.playback.speaker "Output Volume - SPK/EAR"
+    setprop alsa.mixer.playback.headset "Output Volume - SPK/EAR"
+    setprop alsa.mixer.playback.bluetooth.sco "Output Volume - SPK/EAR"
+    setprop alsa.mixer.playback.bluetooth.a2dp "Output Volume - SPK/EAR"
+
+    setprop alsa.mixer.capture.master "Capture"
+    setprop alsa.mixer.capture.earpiece "Capture"
+    setprop alsa.mixer.capture.speaker "Capture"
+    setprop alsa.mixer.capture.headset "Capture"
+    setprop alsa.mixer.capture.bluetooth.sco "Capture"
+    setprop alsa.mixer.capture.bluetooth.a2dp "Capture"
+
+    # allow net_raw to have access to /dev/socket directory
+    chown root net_raw /dev/socket
+    chmod 0775 /dev/socket
 
 on boot
 # basic network init
@@ -250,11 +321,11 @@ on boot
 
     write /proc/sys/vm/overcommit_memory 1
     write /proc/sys/vm/min_free_order_shift 4
-    # standart android
-    # write /sys/module/lowmemorykiller/parameters/minfree 1536,2048,4096,5120,5632,6144
-
-    # tunning
-    write /sys/module/lowmemorykiller/parameters/minfree 1536,2048,4096,5120,15360,23040
+    write /proc/sys/vm/swappiness 0
+    write /proc/sys/vm/dirty_ratio 10
+    write /proc/sys/vm/vfs_cache_pressure 100
+    write /proc/sys/vm/min_free_kbytes 4096
+    write /sys/module/lowmemorykiller/parameters/minfree 1536,2048,4096,5120,5632,6144
 
     # Set init its forked children's oom_adj.
     write /proc/1/oom_adj -16
@@ -335,6 +406,12 @@ on boot
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
     chown bluetooth bluetooth /sys/class/rfkill/rfkill1/state 
 
+#
+# turn off BT radio, due fix first BT turn on
+# Criminal
+#
+    write /sys/class/rfkill/rfkill0/state 0
+
     chmod 6777 /system/bin/brcm_dutMode
 # +++++++++++++++++++++++++++++++++++++++++++
 
@@ -346,9 +423,12 @@ on boot
     setprop net.tcp.buffersize.edge    4093,26280,35040,4096,16384,35040
     setprop net.tcp.buffersize.gprs    4092,8760,11680,4096,8760,11680
 
-    start sysinit
+# Include extra init file
+    import /system/etc/init.local.rc
 
-on property:lk.filesystem.ready=1
+# Run sysinit
+    exec /system/bin/sysinit
+
     class_start default
 
 ## Daemon processes to be run by init.
@@ -356,11 +436,9 @@ on property:lk.filesystem.ready=1
 service console /system/bin/sh
     console
 
-# add 2009.12.01
-# akmd service 
-service akmd2 /system/bin/akmd2
-    disabled
-    oneshot
+service akmd /system/bin/akmd 0 0
+    user compass
+    group compass misc input
 
 # adbd is controlled by the persist.service.adb.enable system property
 service adbd /sbin/adbd
@@ -376,10 +454,6 @@ on property:persist.service.adb.enable=1
 on property:persist.service.adb.enable=0
     stop adbd
 
-#service playlogo /system/bin/playlogo
-#	user root
-#	oneshot
-
 service servicemanager /system/bin/servicemanager
     user system
     critical
@@ -388,22 +462,27 @@ service servicemanager /system/bin/servicemanager
 
 service vold /system/bin/vold
     socket vold stream 0660 root mount
+    ioprio be 2
 
-service nexus /system/bin/nexus
-    socket nexus stream 0660 root system
-    disabled
+service netd /system/bin/netd
+    socket netd stream 0660 root system
+
+# ??? network???
+#service nexus /system/bin/nexus
+#    socket nexus stream 0660 root system
+#    disabled
 
 #service mountd /system/bin/mountd
 #    socket mountd stream 0660 root mount
 
 # to enable wifi
 service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c/data/misc/wifi/bcm_supp.conf
-    disabled
-    oneshot
+   disabled
+   oneshot
 
 service dhcpcd /system/bin/dhcpcd -BKL eth0
-    disabled
-    oneshot
+   disabled
+   oneshot
 
 service ifcfg_eth0 /system/bin/ifconfig eth0 up
     disabled
@@ -424,8 +503,8 @@ service ril-daemon /system/bin/rild
     user root
     group radio cache inet misc audio
 
-service DR-daemon /system/bin/drexe
-	user root
+#service DR-daemon /system/bin/drexe
+#	user root
 
 #service mobex-daemon /system/bin/npsmobex
 #	user root 
@@ -456,7 +535,7 @@ service dbus /system/bin/dbus-daemon --system --nofork
     user bluetooth
     group bluetooth net_bt_admin
 
-service bluetoothd /system/bin/bluetoothd -n
+service bluetoothd /system/bin/bluetoothd -n /etc/blutooth/main.conf
     socket bluetooth stream 660 bluetooth bluetooth
     socket dbus_bluetooth stream 660 bluetooth bluetooth
     # init.rc does not yet support applying capabilities, so run as root and
@@ -466,14 +545,14 @@ service bluetoothd /system/bin/bluetoothd -n
 
     
 # +++++++++++++++++++++++++++++++++++++++++++
- # Start BTLD -----------------------------------------
+# Start BTLD -----------------------------------------
 service btld /system/bin/logwrapper /system/bin/btld -hb 3000000 -hp /dev/s3c_serial1 -lpm 1
     user root
     group bluetooth net_bt_admin
     disabled
     oneshot
 
-# Start DTUN OBEXD  -----------------------------------------
+## Start DTUN OBEXD  -----------------------------------------
 service obexd /system/bin/logwrapper /system/bin/obexd
     #socket bluetooth stream 660 bluetooth bluetooth
     #socket dbus_bluetooth stream 660 bluetooth bluetooth
@@ -484,7 +563,7 @@ service obexd /system/bin/logwrapper /system/bin/obexd
     disabled
     oneshot
 
- # Start BLUETOOTHD  -----------------------------------------
+# Start BLUETOOTHD  -----------------------------------------
 service bluetoothd /system/bin/logwrapper /system/bin/bluetoothd -n /etc/bluez/main.conf
     socket bluetooth stream 660 bluetooth bluetooth
     socket dbus_bluetooth stream 660 bluetooth bluetooth
@@ -519,15 +598,21 @@ service pbap /system/bin/sdptool add --channel=19 PBAP
     disabled
     oneshot
 
+service hciattach /system/bin/brcm_patchram_plus -d --baudrate 3000000 --patchram /system/bin/BCM4325D1_004.002.004.0153.0173.hcd --enable_hci /dev/s3c_serial1
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
+    oneshot
+
 service installd /system/bin/installd
     socket installd stream 600 system system
 
 #service flash_recovery /system/etc/install-recovery.sh
 #    oneshot
 
-service sysinit /system/bin/logwrapper /system/xbin/busybox run-parts /system/etc/init.d
-    disabled
-    oneshot
+#service sysinit /system/bin/logwrapper /system/xbin/busybox run-parts /system/etc/init.d
+#    disabled
+#    oneshot
 
 service racoon /system/bin/racoon
     socket racoon stream 600 system system
