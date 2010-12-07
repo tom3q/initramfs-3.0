@@ -23,7 +23,11 @@ file /lib/modules/bnep.ko /Volumes/dev/i5700/linux/initramfs/lib/modules/bnep.ko
 file /lib/modules/tun.ko /Volumes/dev/i5700/linux/initramfs/lib/modules/tun.ko 0644 0 0
 file /lib/modules/cifs.ko /Volumes/dev/i5700/linux/initramfs/lib/modules/cifs.ko 0644 0 0
 file /lib/modules/qt5480.ko /Volumes/dev/i5700/linux/initramfs/lib/modules/qt5480.ko 0644 0 0
+
 file /init.rc /Volumes/dev/i5700/linux/initramfs/init.rc 0644 0 0
+file /ueventd.goldfish.rc /Volumes/dev/i5700/linux/initramfs/ueventd.goldfish.rc 0644 0 0
+file /ueventd.rc /Volumes/dev/i5700/linux/initramfs/ueventd.rc 0644 0 0
+
 slink /etc /system/etc 0777 0 0
 dir /sys 0755 0 0
 file /sys/stgloc /Volumes/dev/i5700/linux/initramfs/sys/stgloc 0644 0 0
@@ -73,3 +77,5 @@ file /tmp/s3c-keypad-rev0010.kcm.bin /Volumes/dev/i5700/linux/initramfs/tmp/s3c-
 file /fota.rc /Volumes/dev/i5700/linux/initramfs/fota.rc 0644 0 0
 file /default.prop /Volumes/dev/i5700/linux/initramfs/default.prop 0644 0 0
 file /init.GT-I5700.rc /Volumes/dev/i5700/linux/initramfs/init.GT-I5700.rc 0644 0 0
+
+slink /sbin/ueventd /init 0755 0 0
