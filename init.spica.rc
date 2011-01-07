@@ -1,0 +1,8 @@
+on boot
+    setprop ro.radio.use-ppp no
+    setprop ro.build.product GT-I5700
+    setprop ro.product.device GT-I5700
+
+service GT-I5700-setup /system/etc/init.GT-I5700.sh
+    oneshot
+

@@ -27,6 +27,7 @@ file /lib/modules/qt5480.ko /Volumes/dev/i5700/linux/initramfs/lib/modules/qt548
 file /init.rc /Volumes/dev/i5700/linux/initramfs/init.rc 0644 0 0
 file /ueventd.goldfish.rc /Volumes/dev/i5700/linux/initramfs/ueventd.goldfish.rc 0644 0 0
 file /ueventd.rc /Volumes/dev/i5700/linux/initramfs/ueventd.rc 0644 0 0
+file /ueventd.spica.rc /Volumes/dev/i5700/linux/initramfs/ueventd.spica.rc 0644 0 0
 
 slink /etc /system/etc 0777 0 0
 dir /sys 0755 0 0
@@ -76,6 +77,6 @@ file /tmp/sec_headset.kl /Volumes/dev/i5700/linux/initramfs/tmp/sec_headset.kl 0
 file /tmp/s3c-keypad-rev0010.kcm.bin /Volumes/dev/i5700/linux/initramfs/tmp/s3c-keypad-rev0010.kcm.bin 0666 0 0
 file /fota.rc /Volumes/dev/i5700/linux/initramfs/fota.rc 0644 0 0
 file /default.prop /Volumes/dev/i5700/linux/initramfs/default.prop 0644 0 0
-file /init.GT-I5700.rc /Volumes/dev/i5700/linux/initramfs/init.GT-I5700.rc 0644 0 0
+file /init.spica.rc /Volumes/dev/i5700/linux/initramfs/init.spica.rc 0644 0 0
 
 slink /sbin/ueventd /init 0755 0 0

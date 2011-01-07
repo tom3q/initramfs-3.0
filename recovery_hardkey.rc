@@ -1,79 +1,424 @@
+on early-init
+    start ueventd
+
 on init
 
-# S.LSI FIX : output console directly 
-#	export PATH /sbin
-        export PATH /sbin:/xbin:/system/sbin:/system/bin:/system/xbin
-        export LD_LIBRARY_PATH /xbin/lib:/system/lib:/system/lib/egl
+sysclktz 0
 
-	export ANDROID_DATA /data
-	export EXTERNAL_STORAGE /sdcard
+loglevel 3
 
-	symlink /system/etc /etc
+# setup the global environment
+    export PATH /sbin:/xbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin:/xbin
+    export LD_LIBRARY_PATH /xbin/lib:/vendor/lib:/system/lib:/system/lib/egl
+    export ANDROID_BOOTLOGO 1
+    export ANDROID_ROOT /system
+    export ANDROID_ASSETS /system/app
+    export ANDROID_DATA /data
+    export EXTERNAL_STORAGE /sdcard
 
-	mkdir /xbin
-	mkdir /sdcard
-	mkdir /system
-	mkdir /data
-	mkdir /cache
-        mount tmpfs nodev /tmp
- 
-# S.LSI FIX START: output console directly 
-        insmod /lib/modules/xsr.ko
-        insmod /lib/modules/xsr_stl.ko
-        insmod /lib/modules/dpram.ko
- 
-        insmod /lib/modules/rfs.ko
-#       insmod /lib/modules/yaffs2.ko
-        insmod /lib/modules/param.ko 
+# Backward compatibility
+    symlink /system/etc /etc
+    symlink /sys/kernel/debug /d
 
-#    	insmod /lib/modules/multipdp.ko
-#    	insmod /lib/modules/s3c_mfc.ko
-#    	insmod /lib/modules/s3c_g2d_driver.ko
-#    	insmod /lib/modules/s3c_pp.ko
-#    	insmod /lib/modules/s3c_jpeg.ko
-#    	insmod /lib/modules/s3c_cmm.ko
-	 
-        mkdir /sdcard 0000 system system
-        mkdir /system
-        mkdir /data 0771 system system
-        mkdir /cache 0770 system cache
- 
-        chmod 0666 /dev/bml8
+# insert modules
+    insmod /lib/modules/xsr.ko
+    insmod /lib/modules/xsr_stl.ko
+    insmod /lib/modules/rfs.ko
+    insmod /lib/modules/dpram.ko
 
-        #mount yaffs2 /dev/bml5 /system
-#    	mount rfs /dev/stl6 /system xattr,check=no
+    insmod /lib/modules/param.ko
 
-	# for multiCSC, From Kim SiWan (siwan10.kim@samsung.com)
-    	#mount rfs /dev/stl10 /efs nosuid nodev xattr,check=no
-# S.LSI FIX END
+    mkdir /sdcard
 
-        # /xbin (busybox)
-        mount squashfs /dev/bml8 /xbin ro loop
+# create mountpoints and mount tmpfs on sqlite_stmt_journals
+    mkdir /xbin
+    mkdir /system
+    mkdir /data 0771 system system
+    mkdir /cache 0770 system cache
+    mkdir /config 0500 root root
+    mkdir /sqlite_stmt_journals 01777 root root
+    mount tmpfs tmpfs /sqlite_stmt_journals size=4m
 
-# Mod version
-	setprop ro.modversion "LK based on CM v1.4 + JF"
+    mkdir /sd-ext 0771 system system
+
+    write /proc/sys/kernel/panic_on_oops 1
+    write /proc/sys/kernel/hung_task_timeout_secs 0
+    write /proc/cpu/alignment 4
+    write /proc/sys/kernel/sched_latency_ns 4000000
+    write /proc/sys/kernel/sched_wakeup_granularity_ns 1000000
+    write /proc/sys/kernel/sched_min_granularity_ns 800000
+    write /proc/sys/kernel/sched_compat_yield 1
+    write /proc/sys/kernel/sched_child_runs_first 0
+
+# Create cgroup mount points for process groups
+    mkdir /dev/cpuctl
+    mount cgroup none /dev/cpuctl cpu
+    chown system system /dev/cpuctl
+    chown system system /dev/cpuctl/tasks
+    chmod 0777 /dev/cpuctl/tasks
+    write /dev/cpuctl/cpu.shares 1024
+
+    mkdir /dev/cpuctl/fg_boost
+    chown system system /dev/cpuctl/fg_boost/tasks
+    chmod 0777 /dev/cpuctl/fg_boost/tasks
+    write /dev/cpuctl/fg_boost/cpu.shares 1024
+
+    mkdir /dev/cpuctl/bg_non_interactive
+    chown system system /dev/cpuctl/bg_non_interactive/tasks
+    chmod 0777 /dev/cpuctl/bg_non_interactive/tasks
+    # 5.0 %
+    write /dev/cpuctl/bg_non_interactive/cpu.shares 52
+
+# mount mtd partitions
+    # Mount /system rw first to give the filesystem a chance to save a checkpoint
+    # mount yaffs2 mtd@system /system 
+    # mount yaffs2 mtd@system /system ro remount
+    mount rfs /dev/stl6 /system rw xattr,check=no
+    mount ext2 /dev/stl6 /system rw nosuid nodev noatime nodiratime
+
+    # We chown/chmod /data again so because mount is run as root + defaults
+    # mount yaffs2 mtd@userdata /data nosuid nodev
+    # mount yaffs2 /dev/bml6 /data nosuid nodev
+    mount rfs /dev/stl5 /data nosuid nodev xattr,check=no
+    mount ext2 /dev/stl5 /data nosuid nodev noatime nodiratime
+    mount ext4 /dev/stl5 /data nosuid nodev noatime nodiratime data=ordered
+
+    chown system system /data
+    chmod 0771 /data
+    chmod 0666 /dev/log/radio
+    chmod 0666 /dev/log/main
+
+    # Create dump dir and collect dumps.
+    # Do this before we mount cache so eventually we can use cache for
+    # storing dumps on platforms which do not have a dedicated dump partition.
+   
+    mkdir /data/dontpanic
+    chown root log /data/dontpanic
+    chmod 0750 /data/dontpanic
+
+    # Collect apanic data, free resources and re-arm trigger
+    copy /proc/apanic_console /data/dontpanic/apanic_console
+    chown root log /data/dontpanic/apanic_console
+    chmod 0640 /data/dontpanic/apanic_console
+
+    copy /proc/apanic_threads /data/dontpanic/apanic_threads
+    chown root log /data/dontpanic/apanic_threads
+    chmod 0640 /data/dontpanic/apanic_threads
+
+    write /proc/apanic_console 1
+
+    # Collect ramconsole data
+    copy /proc/last_kmsg /data/dontpanic/last_kmsg
+    chown root log /data/dontpanic/last_kmsg
+    chmod 0640 /data/dontpanic/last_kmsg
+
+    # Same reason as /data above
+    # mount yaffs2 mtd@cache /cache nosuid nodev
+    mount rfs /dev/stl7 /cache nosuid nodev xattr,check=no
+    mount ext2 /dev/stl7 /cache nosuid nodev noatime nodiratime
+    chown system cache /cache
+    chmod 0770 /cache
+
+    # We chown/chmod /efs again so because mount is run as root + defaults
+    # mount yaffs2 mtd@userdata /data nosuid nodev
+    #mount yaffs2 /dev/bml10 /efs nosuid nodev
+    mount rfs /dev/stl10 /efs nosuid nodev xattr,check=no
+    chown radio radio /efs
+    chmod 0770 /efs
+
+    # This may have been created by the recovery system with odd permissions
+    chown system cache /cache/recovery
+    chmod 0770 /cache/recovery
+
+    #change permissions on vmallocinfo so we can grab it from bugreports
+    chown root log /proc/vmallocinfo
+    chmod 0440 /proc/vmallocinfo
+# for Sensor HAL
+    chown system system /dev/bma150
+    chown system system /dev/akm8973_daemon
+    chown system system /dev/akm8973_aot
+#   chown system system /dev/bma020
+#   chown system system /dev/proximity
+    chmod 0777 /dev/bma150
+    chmod 0777 /dev/akm8973_daemon
+    chmod 0777 /dev/akm8973_aot
+#   chmod 0777 /dev/bma020
+#   chmod 0777 /dev/proximity
+
+    chmod 0666 /dev/bml8
+
+    # /xbin (busybox)
+    mount squashfs /dev/bml8 /xbin ro loop
+
+    #change permissions on kmsg & sysrq-trigger so bugreports can grab kthread stacks
+    chown root system /proc/kmsg
+    chmod 0440 /proc/kmsg
+    chown root system /proc/sysrq-trigger
+    chmod 0220 /proc/sysrq-trigger
+
+# create basic filesystem structure
+    mkdir /data/misc 01771 system misc
+    mkdir /data/misc/bluetoothd 0770 bluetooth bluetooth
+    mkdir /data/misc/bluetooth 0770 bluetooth bluetooth
+    mkdir /data/misc/keystore 0700 keystore keystore
+    mkdir /data/misc/vpn 0770 system system
+    mkdir /data/misc/systempkeys 0700 system system
+    mkdir /data/misc/vpn/profiles 0770 system system
+    # give system access to wpa_supplicant.conf for backup and restore
+    mkdir /data/misc/wifi 0770 wifi wifi
+    chmod 0770 /data/misc/wifi
+    chmod 0660 /data/misc/wifi/wpa_supplicant.conf
+    mkdir /data/local 0771 shell shell
+    mkdir /data/local/tmp 0771 shell shell
+    mkdir /data/data 0771 system system
+    mkdir /data/app-private 0771 system system
+    mkdir /data/app 0771 system system
+    mkdir /data/property 0700 root root
+
+# for AppsOnSD keystore
+    mkdir /data/misc/systemkeys 700 system system
+
+# create log system 
+    mkdir /data/log  0777 root root 
+    chmod 0777 /data/log
+
+    # create dalvik-cache and double-check the perms
+    mkdir /data/dalvik-cache 0771 system system
+    chown system system /data/dalvik-cache
+    chmod 0771 /data/dalvik-cache
+
+    # create the lost+found directories, so as to enforce our permissions
+    mkdir /data/lost+found 0770
+    mkdir /cache/lost+found 0770
+
+    # double check the perms, in case lost+found already exists, and set owner
+    chown root root /data/lost+found
+    chmod 0770 /data/lost+found
+    chown root root /cache/lost+found
+    chmod 0770 /cache/lost+found
+    
+    # create dalvik-cache folder on /cache
+    mkdir /cache/dalvik-cache 0771 system system
+    chown system system /cache/dalvik-cache
+    chmod 0777 /cache/dalvik-cache
+
+# to enable wifi
+    setprop wifi.interface "eth0"
+
+    chown root root /system/bin/wlservice
+    chmod 6777 /system/bin/wlservice
+    mkdir /data/misc/wifi 0777 wifi wifi
+    chmod 0777 /data/misc/wifi/
+    mkdir /data/misc/dhcp 0777 dhcp dhcp
+    mkdir /data/misc/wifi/sockets 0777 wifi wifi
+    
+# for WAPI CERT
+#    mkdir /data/misc/wifi/cert 0777 wifi wifi
+#    mkdir /data/misc/wifi/cert/as 0777 wifi wifi
+#    mkdir /data/misc/wifi/cert/user 0777 wifi wifi
+# end of wifi
+
+    symlink /dev/snd/pcmC0D0c /dev/pcmC0D0c
+    symlink /dev/snd/pcmC0D0p /dev/pcmC0D0p
+    symlink /dev/snd/controlC0 /dev/controlC0
+    symlink /dev/snd/timer /dev/timer
+    chmod 0777 /dev/pcmC0D0c
+    chmod 0777 /dev/pcmC0D0p
+    chmod 0777 /dev/controlC0
+    chmod 0777 /dev/timer
+    chown root audio /dev/snd/controlC0
+    chown root audio /dev/snd/pcmC0D0c
+    chown root audio /dev/snd/pcmC0D0p
+    chown root audio /dev/snd/timer
+
+    setprop alsa.mixer.playback.master "Output Volume - SPK/EAR"
+    setprop alsa.mixer.playback.earpiece "Output Volume - RCV"
+    setprop alsa.mixer.playback.speaker "Output Volume - SPK/EAR"
+    setprop alsa.mixer.playback.headset "Output Volume - SPK/EAR"
+    setprop alsa.mixer.playback.bluetooth.sco "Output Volume - SPK/EAR"
+    setprop alsa.mixer.playback.bluetooth.a2dp "Output Volume - SPK/EAR"
+
+    setprop alsa.mixer.capture.master "Capture"
+    setprop alsa.mixer.capture.earpiece "Capture"
+    setprop alsa.mixer.capture.speaker "Capture"
+    setprop alsa.mixer.capture.headset "Capture"
+    setprop alsa.mixer.capture.bluetooth.sco "Capture"
+    setprop alsa.mixer.capture.bluetooth.a2dp "Capture"
+
+    # allow net_raw to have access to /dev/socket directory
+    chown root net_raw /dev/socket
+    chmod 0775 /dev/socket
 
 on boot
-        write /sys/class/sec/switch/uart_sel MODEM
-        write /sys/class/sec/switch/usb_sel PDA
+# basic network init
+    ifup lo
+    hostname localhost
+    domainname localdomain
 
-  	ifup lo
-	hostname localhost
-	domainname localdomain
+# set RLIMIT_NICE to allow priorities from 19 to -20
+    setrlimit 13 40 40
 
-	class_start default
+# Define the oom_adj values for the classes of processes that can be
+# killed by the kernel.  These are used in ActivityManagerService.
+    setprop ro.FOREGROUND_APP_ADJ 0
+    setprop ro.VISIBLE_APP_ADJ 1
+    setprop ro.PERCEPTIBLE_APP_ADJ 2
+    setprop ro.HEAVY_WEIGHT_APP_ADJ 3
+    setprop ro.SECONDARY_SERVER_ADJ 4
+    setprop ro.BACKUP_APP_ADJ 5
+    setprop ro.HOME_APP_ADJ 6
+    setprop ro.HIDDEN_APP_MIN_ADJ 7
+    setprop ro.EMPTY_APP_ADJ 15
 
-# S.LSI FIX START: output console directly 
-        service console /sbin/ash
-	        console
-# S.LSI FIX END
+# Define the memory thresholds at which the above process classes will
+# be killed.  These numbers are in pages (4k).
+    setprop ro.FOREGROUND_APP_MEM 2048
+    setprop ro.VISIBLE_APP_MEM 3072
+    setprop ro.PERCEPTIBLE_APP_MEM 4096
+    setprop ro.HEAVY_WEIGHT_APP_MEM 4096
+    setprop ro.SECONDARY_SERVER_MEM 6144
+    setprop ro.BACKUP_APP_MEM 6144
+    setprop ro.HOME_APP_MEM 6144
+    setprop ro.HIDDEN_APP_MEM 7168
+    setprop ro.EMPTY_APP_MEM 8192
 
-	service recovery /sbin/recovery
+# Write value must be consistent with the above properties.
+# Note that the driver only supports 6 slots, so we have HOME_APP at the
+# same memory level as services.
+    write /sys/module/lowmemorykiller/parameters/adj 0,1,2,7,7,15
 
-	service adbd /sbin/adbd2 recovery
+    write /proc/sys/vm/overcommit_memory 1
+    write /proc/sys/vm/min_free_order_shift 4
+    write /proc/sys/vm/swappiness 0
+    write /proc/sys/vm/dirty_ratio 10
+    write /proc/sys/vm/vfs_cache_pressure 100
+    write /proc/sys/vm/min_free_kbytes 4096
+    write /sys/module/lowmemorykiller/parameters/minfree 1536,2048,4096,5120,5632,6144
 
-	on property:persist.service.adb.enable=1
-	start adbd
+    # Set init its forked children's oom_adj.
+    write /proc/1/oom_adj -16
 
-	on property:persist.service.adb.enable=0
-	stop adbd
+    # Tweak background writeout
+    write /proc/sys/vm/dirty_expire_centisecs 200
+    write /proc/sys/vm/dirty_background_ratio  5
+
+    # Permissions for System Server and daemons.
+    chown radio system /sys/android_power/state
+    chown radio system /sys/android_power/request_state
+    chown radio system /sys/android_power/acquire_full_wake_lock
+    chown radio system /sys/android_power/acquire_partial_wake_lock
+    chown radio system /sys/android_power/release_wake_lock
+    chown radio system /sys/power/state
+    chown radio system /sys/power/wake_lock
+    chown radio system /sys/power/wake_unlock
+    chmod 0660 /sys/power/state
+    chmod 0660 /sys/power/wake_lock
+    chmod 0660 /sys/power/wake_unlock
+    chown system system /sys/class/timed_output/vibrator/enable
+    chown system system /sys/class/leds/keyboard-backlight/brightness
+    chown system system /sys/class/leds/lcd-backlight/brightness
+    chown system system /sys/class/leds/button-backlight/brightness
+    chown system system /sys/class/leds/jogball-backlight/brightness
+    chown system system /sys/class/leds/red/brightness
+    chown system system /sys/class/leds/green/brightness
+    chown system system /sys/class/leds/blue/brightness
+    chown system system /sys/class/leds/red/device/grpfreq
+    chown system system /sys/class/leds/red/device/grppwm
+    chown system system /sys/class/leds/red/device/blink
+    chown system system /sys/class/leds/red/brightness
+    chown system system /sys/class/leds/green/brightness
+    chown system system /sys/class/leds/blue/brightness
+    chown system system /sys/class/leds/red/device/grpfreq
+    chown system system /sys/class/leds/red/device/grppwm
+    chown system system /sys/class/leds/red/device/blink
+    chown system system /sys/class/timed_output/vibrator/enable
+    chown system system /sys/module/sco/parameters/disable_esco
+    chown system system /sys/kernel/ipv4/tcp_wmem_min
+    chown system system /sys/kernel/ipv4/tcp_wmem_def
+    chown system system /sys/kernel/ipv4/tcp_wmem_max
+    chown system system /sys/kernel/ipv4/tcp_rmem_min
+    chown system system /sys/kernel/ipv4/tcp_rmem_def
+    chown system system /sys/kernel/ipv4/tcp_rmem_max
+    chown root radio /proc/cmdline
+
+# make hidden folder for divx authentication
+    mkdir /data/.svix 0770 system system
+
+    chmod 0777 /data/lmfilter.txt
+    chmod 0777 /data/eqfilter.txt
+    chmod 0777 /data/situation.txt 
+    chmod 0777 /data/stream_headset.txt
+    chmod 0777 /data/stream_speaker.txt
+# bootsnd
+    setprop audioflinger.bootsnd 1
+#ifdef SLSI_S3C6410
+# for ctrl cpu freq.
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chmod 0666 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+#endif /* SLSI_S3C6410 */
+# +++++++++++++++++++++++++++++++++++++++++++
+# for Bluetooth
+    chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
+    chown bluetooth bluetooth /proc/bluetooth/sleep/proto
+    chown system system /sys/module/sco/parameters/disable_esco
+    chmod 0660 /sys/module/bluetooth_power/parameters/power
+    chmod 0660 /proc/bluetooth/sleep/proto
+
+    chown bluetooth bluetooth /dev/uinput
+    chmod 0666 /dev/uinput
+    chown bluetooth bluetooth /dev/s3c_serial1
+    chmod 0666 /dev/s3c_serial1
+
+    chmod 0777 /sys/class/rfkill/rfkill0/state
+    chmod 0777 /sys/class/rfkill/rfkill1/state
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill1/state 
+
+#
+# turn off BT radio, due fix first BT turn on
+# Criminal
+#
+    write /sys/class/rfkill/rfkill0/state 0
+
+    chmod 6777 /system/bin/brcm_dutMode
+# +++++++++++++++++++++++++++++++++++++++++++
+
+# Define TCP buffer sizes for various networks
+#   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
+    setprop net.tcp.buffersize.default 4096,87380,110208,4096,16384,110208
+    setprop net.tcp.buffersize.wifi    4095,87380,110208,4096,16384,110208
+    setprop net.tcp.buffersize.umts    4094,87380,110208,4096,16384,110208
+    setprop net.tcp.buffersize.edge    4093,26280,35040,4096,16384,35040
+    setprop net.tcp.buffersize.gprs    4092,8760,11680,4096,8760,11680
+
+# Include extra init file
+    import /system/etc/init.local.rc
+
+# Run sysinit
+#    exec /system/bin/sysinit
+
+    class_start default
+
+service recovery /sbin/recovery
+
+## Daemon processes to be run by init.
+##
+service ueventd /sbin/ueventd
+    critical
+
+service console /sbin/ash
+    console
+
+# adbd is controlled by the persist.service.adb.enable system property
+service adbd /sbin/adbd2 recovery
+    disabled
+
+# adbd on at boot in emulator
+on property:ro.kernel.qemu=1
+    start adbd
+
+on property:persist.service.adb.enable=1
+    start adbd
+
+on property:persist.service.adb.enable=0
+    stop adbd

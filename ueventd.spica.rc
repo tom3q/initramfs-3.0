@@ -1,0 +1,34 @@
+# for Samsung Spica i5700
+/dev/s3c-mfc              0664   system     graphics
+/dev/s3c-rotator          0664   system     graphics
+/dev/s3c-jpg              0660   system     camera
+/dev/s3c-g3d              0664   system     graphics
+/dev/s3c-pp               0664   system     graphics
+/dev/s3c-cmm              0664   system     graphics
+/dev/s3c-g2d              0666   system     graphics
+/dev/s3c-mem              0660   system     system
+/dev/pmem_gpu             0660   system     graphics
+/dev/pmem_stream2         0660   system     graphics
+
+/dev/graphics             0664   system     graphics
+/dev/video0               0660   system     camera
+/dev/video1               0660   system     camera
+
+/dev/dpram0               0664   radio      radio
+/dev/dpram1               0664   radio      radio
+/dev/i2c-5                0666   radio      radio
+/dev/dpramerr             0664   radio      radio
+/dev/multipdp             0664   radio      radio
+/dev/s3c2410_serial0      0666   radio      radio
+/dev/ttyCSD0              0777   radio      radio
+/dev/ttyDUN0              0664   radio      radio
+/dev/ttyTRFB0             0664   radio      radio
+/dev/ttySMD0              0660   radio      radio
+/dev/s3c_serial0          0666   radio      radio
+
+/dev/ttyGPS0              0664   system     system
+/dev/ttyXTRA0             0664   system     system
+
+# for Sensor HAL
+#/dev/akm8973              0660   system     system
+#/dev/accelerometer        0660   system     system
