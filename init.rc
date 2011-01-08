@@ -542,13 +542,13 @@ service dbus /system/bin/dbus-daemon --system --nofork
     user bluetooth
     group bluetooth net_bt_admin
 
-#service bluetoothd /system/bin/bluetoothd -n /etc/blutooth/main.conf
-#    socket bluetooth stream 660 bluetooth bluetooth
-#    socket dbus_bluetooth stream 660 bluetooth bluetooth
-#    # init.rc does not yet support applying capabilities, so run as root and
-#    # let bluetoothd drop uid to bluetooth with the right linux capabilities
-#    group bluetooth net_bt_admin misc
-#    disabled
+service bluetoothd /system/bin/bluetoothd -n /etc/blutooth/main.conf
+    socket bluetooth stream 660 bluetooth bluetooth
+    socket dbus_bluetooth stream 660 bluetooth bluetooth
+    # init.rc does not yet support applying capabilities, so run as root and
+    # let bluetoothd drop uid to bluetooth with the right linux capabilities
+    group bluetooth net_bt_admin misc
+    disabled
 
     
 # +++++++++++++++++++++++++++++++++++++++++++
@@ -560,26 +560,15 @@ service btld /system/bin/logwrapper /system/bin/btld -hb 3000000 -hp /dev/s3c_se
     oneshot
 
 ## Start DTUN OBEXD  -----------------------------------------
-service obexd /system/bin/logwrapper /system/bin/obexd
-    #socket bluetooth stream 660 bluetooth bluetooth
-    #socket dbus_bluetooth stream 660 bluetooth bluetooth
-    # init.rc does not yet support applying capabilities, so run as root and
-    # let obexd drop uid to bluetooth with the right linux capabilities
-    user root
-    group bluetooth net_bt_admin
-    disabled
-    oneshot
-
-# Start BLUETOOTHD  -----------------------------------------
-service bluetoothd /system/bin/logwrapper /system/bin/bluetoothd -n /etc/bluez/main.conf
-    socket bluetooth stream 660 bluetooth bluetooth
-    socket dbus_bluetooth stream 660 bluetooth bluetooth
-    # init.rc does not yet support applying capabilities, so run as root and
-    # let hcid drop uid to bluetooth with the right linux capabilities
-    group bluetooth net_bt_admin misc
-    disabled
-# +++++++++++++++++++++++++++++++++++++++++++
-
+#service obexd /system/bin/logwrapper /system/bin/obexd
+#    #socket bluetooth stream 660 bluetooth bluetooth
+#    #socket dbus_bluetooth stream 660 bluetooth bluetooth
+#    # init.rc does not yet support applying capabilities, so run as root and
+#    # let obexd drop uid to bluetooth with the right linux capabilities
+#    user root
+#    group bluetooth net_bt_admin
+#    disabled
+#    oneshot
 
 service hfag /system/bin/sdptool add --channel=10 HFAG
     user bluetooth
