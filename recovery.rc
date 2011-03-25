@@ -19,6 +19,7 @@ loglevel 3
 # Backward compatibility
     symlink /system/etc /etc
     symlink /sys/kernel/debug /d
+    symlink /system/bin /xbin
 
 # insert modules
     insmod /lib/modules/xsr.ko
@@ -148,7 +149,7 @@ loglevel 3
     chmod 0666 /dev/bml8
 
     # /xbin (busybox)
-    mount squashfs /dev/bml8 /xbin ro loop
+    mount squashfs /dev/block/mtdblock8 /xbin ro loop
 
     #change permissions on kmsg & sysrq-trigger so bugreports can grab kthread stacks
     chown root system /proc/kmsg
@@ -409,16 +410,15 @@ service ueventd /sbin/ueventd
 service console /sbin/ash
     console
 
-# adbd is controlled by the persist.service.adb.enable system property
-service adbd /sbin/adbd2 recovery
-    disabled
+# always start adbd for debugging purposes
+service adbd /sbin/adbd recovery
 
 # adbd on at boot in emulator
-on property:ro.kernel.qemu=1
-    start adbd
+# on property:ro.kernel.qemu=1
+#    start adbd
 
-on property:persist.service.adb.enable=1
-    start adbd
+# on property:persist.service.adb.enable=1
+#     start adbd
 
-on property:persist.service.adb.enable=0
-    stop adbd
+# on property:persist.service.adb.enable=0
+#     stop adbd
