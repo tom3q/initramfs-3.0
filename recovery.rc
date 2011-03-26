@@ -19,7 +19,7 @@ loglevel 3
 # Backward compatibility
     symlink /system/etc /etc
     symlink /sys/kernel/debug /d
-    symlink /system/bin /xbin
+    symlink /xbin /system/bin
 
 # insert modules
     insmod /lib/modules/xsr.ko
