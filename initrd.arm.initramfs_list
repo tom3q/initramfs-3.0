@@ -1,4 +1,24 @@
+# /
 dir /lib 0755 0 0
+dir /sys 0755 0 0
+dir /sbin 0755 0 0
+dir /res 0755 0 0
+dir /system 0755 0 0
+dir /proc 0755 0 0
+dir /dev 0755 0 0
+dir /tmp 0755 0 0
+file /recovery.rc /home/tom3q/android/initramfs-2.6.38/recovery.rc 0644 0 0
+file /init /home/tom3q/android/initramfs-2.6.38/init 0755 0 0
+file /init.rc /home/tom3q/android/initramfs-2.6.38/init.rc 0644 0 0
+file /init.GT-I5700.rc /home/tom3q/android/initramfs-2.6.38/init.GT-I5700.rc 0644 0 0
+file /ueventd.goldfish.rc /home/tom3q/android/initramfs-2.6.38/ueventd.goldfish.rc 0644 0 0
+file /ueventd.rc /home/tom3q/android/initramfs-2.6.38/ueventd.rc 0644 0 0
+file /ueventd.GT-I5700.rc /home/tom3q/android/initramfs-2.6.38/ueventd.GT-I5700.rc 0644 0 0
+file /default.prop /home/tom3q/android/initramfs-2.6.38/default.prop 0644 0 0
+slink /etc /system/etc 0777 0 0
+
+# /lib
+slink /lib/ld-uClibc.so.0 /xbin/lib/ld-uClibc.so.0 0777 0 0
 dir /lib/modules 0755 0 0
 file /lib/modules/crc32.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/crc32.ko 0644 0 0
 file /lib/modules/dhd.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/dhd.ko 0644 0 0
@@ -6,36 +26,20 @@ file /lib/modules/rfs.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/rfs.ko
 file /lib/modules/s3c_g3d.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_g3d.ko 0644 0 0
 file /lib/modules/s3c_cmm.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_cmm.ko 0644 0 0
 file /lib/modules/s3c_camera.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_camera.ko 0644 0 0
-file /lib/modules/stgloc /home/tom3q/android/initramfs-2.6.38/lib/modules/stgloc 0644 0 0
 file /lib/modules/dpram.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/dpram.ko 0644 0 0
 file /lib/modules/s3c_rotator.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_rotator.ko 0644 0 0
-file /lib/modules/xsr_stl.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/xsr_stl.ko 0644 0 0
 file /lib/modules/s3c_jpeg.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_jpeg.ko 0644 0 0
 file /lib/modules/s3c_g2d_driver.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_g2d_driver.ko 0644 0 0
 file /lib/modules/param.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/param.ko 0644 0 0
-file /lib/modules/xsr.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/xsr.ko 0644 0 0
 file /lib/modules/multipdp.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/multipdp.ko 0644 0 0
 file /lib/modules/s3c_pp.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_pp.ko 0644 0 0
 file /lib/modules/s3c_mfc.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_mfc.ko 0644 0 0
 file /lib/modules/vibrator.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/vibrator.ko 0644 0 0
-file /lib/modules/xsr_debug.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/xsr_debug.ko 0644 0 0
 file /lib/modules/bnep.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/bnep.ko 0644 0 0
 file /lib/modules/tun.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/tun.ko 0644 0 0
 file /lib/modules/cifs.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/cifs.ko 0644 0 0
-file /lib/modules/qt5480.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/qt5480.ko 0644 0 0
 
-file /init.rc /home/tom3q/android/initramfs-2.6.38/init.rc 0644 0 0
-file /ueventd.goldfish.rc /home/tom3q/android/initramfs-2.6.38/ueventd.goldfish.rc 0644 0 0
-file /ueventd.rc /home/tom3q/android/initramfs-2.6.38/ueventd.rc 0644 0 0
-file /ueventd.spica.rc /home/tom3q/android/initramfs-2.6.38/ueventd.spica.rc 0644 0 0
-
-slink /etc /system/etc 0777 0 0
-dir /sys 0755 0 0
-file /sys/stgloc /home/tom3q/android/initramfs-2.6.38/sys/stgloc 0644 0 0
-file /recovery.rc /home/tom3q/android/initramfs-2.6.38/recovery.rc 0644 0 0
-file /recovery_hardkey.rc /home/tom3q/android/initramfs-2.6.38/recovery_hardkey.rc 0644 0 0
-file /init /home/tom3q/android/initramfs-2.6.38/init 0755 0 0
-dir /sbin 0755 0 0
+# /sbin
 file /sbin/su /home/tom3q/android/initramfs-2.6.38/sbin/su 6755 0 0
 file /sbin/recovery /home/tom3q/android/initramfs-2.6.38/sbin/recovery 0755 0 0
 file /sbin/adbd /home/tom3q/android/initramfs-2.6.38/sbin/adbd 0755 0 0
@@ -44,9 +48,11 @@ file /sbin/ash /home/tom3q/android/initramfs-2.6.38/sbin/ash 0755 0 0
 file /sbin/fix_permissions /home/tom3q/android/initramfs-2.6.38/sbin/fix_permissions 0755 0 0
 file /sbin/nandroid-md5.sh /home/tom3q/android/initramfs-2.6.38/sbin/nandroid-md5.sh 0755 0 0
 file /sbin/remount /home/tom3q/android/initramfs-2.6.38/sbin/remount 0755 0 0
-dir /res 0755 0 0
-dir /res/images 0755 0 0
+slink /sbin/ueventd /init 0755 0 0
 
+# /res
+dir /res/images 0755 0 0
+file /res/images/icon_clockwork.png /home/tom3q/android/initramfs-2.6.38/res/images/icon_clockwork.png 0644 0 0
 file /res/images/indeterminate1.png /home/tom3q/android/initramfs-2.6.38/res/images/indeterminate1.png 0644 0 0
 file /res/images/indeterminate2.png /home/tom3q/android/initramfs-2.6.38/res/images/indeterminate2.png 0644 0 0
 file /res/images/indeterminate3.png /home/tom3q/android/initramfs-2.6.38/res/images/indeterminate3.png 0644 0 0
@@ -57,26 +63,19 @@ file /res/images/icon_error.png /home/tom3q/android/initramfs-2.6.38/res/images/
 file /res/images/icon_installing.png /home/tom3q/android/initramfs-2.6.38/res/images/icon_installing.png 0644 0 0
 file /res/images/progress_fill.png /home/tom3q/android/initramfs-2.6.38/res/images/progress_fill.png 0644 0 0
 file /res/images/progress_empty.png /home/tom3q/android/initramfs-2.6.38/res/images/progress_empty.png 0644 0 0
+file /res/recovery.fstab /home/tom3q/android/initramfs-2.6.38/res/recovery.fstab 0644 0 0
 
-dir /system 0755 0 0
+# /system
 dir /system/etc 0755 0 0
 file /system/etc/ld.so.cache /home/tom3q/android/initramfs-2.6.38/system/etc/ld.so.cache 0644 0 0
-dir /proc 0755 0 0
-file /proc/stgloc /home/tom3q/android/initramfs-2.6.38/proc/stgloc 0644 0 0
-dir /dev 0755 0 0
-file /dev/stgloc /home/tom3q/android/initramfs-2.6.38/dev/stgloc 0644 0 0
-dir /tmp 0755 0 0
+
+# /tmp
+dir /tmp/bootchart 0755 0 0
 file /tmp/s3c-keypad-rev0020.kl /home/tom3q/android/initramfs-2.6.38/tmp/s3c-keypad-rev0020.kl 0644 0 0
 file /tmp/s3c-keypad-rev0000.kcm.bin /home/tom3q/android/initramfs-2.6.38/tmp/s3c-keypad-rev0000.kcm.bin 0666 0 0
 file /tmp/s3c-keypad-rev0020.kcm.bin /home/tom3q/android/initramfs-2.6.38/tmp/s3c-keypad-rev0020.kcm.bin 0666 0 0
 file /tmp/s3c-keypad-rev0000.kl /home/tom3q/android/initramfs-2.6.38/tmp/s3c-keypad-rev0000.kl 0644 0 0
 file /tmp/s3c-keypad-rev0010.kl /home/tom3q/android/initramfs-2.6.38/tmp/s3c-keypad-rev0010.kl 0644 0 0
-dir /tmp/bootchart 0755 0 0
-file /tmp/bootchart/stgloc /home/tom3q/android/initramfs-2.6.38/tmp/bootchart/stgloc 0644 0 0
 file /tmp/sec_headset.kl /home/tom3q/android/initramfs-2.6.38/tmp/sec_headset.kl 0755 0 0
 file /tmp/s3c-keypad-rev0010.kcm.bin /home/tom3q/android/initramfs-2.6.38/tmp/s3c-keypad-rev0010.kcm.bin 0666 0 0
-file /fota.rc /home/tom3q/android/initramfs-2.6.38/fota.rc 0644 0 0
-file /default.prop /home/tom3q/android/initramfs-2.6.38/default.prop 0644 0 0
-file /init.spica.rc /home/tom3q/android/initramfs-2.6.38/init.spica.rc 0644 0 0
-
-slink /sbin/ueventd /init 0755 0 0
+file /tmp/bootchart/stgloc /home/tom3q/android/initramfs-2.6.38/tmp/bootchart/stgloc 0644 0 0

@@ -8,8 +8,10 @@ sysclktz 0
 loglevel 3
 
 # setup the global environment
-    export PATH /sbin:/xbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin:/xbin
-    export LD_LIBRARY_PATH /xbin/lib:/vendor/lib:/system/lib:/system/lib/egl
+#    export PATH /sbin:/xbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin:/xbin
+#    export LD_LIBRARY_PATH /xbin/lib:/vendor/lib:/system/lib:/system/lib/egl
+    export PATH /xbin
+    export LD_LIBRARY_PATH /xbin/lib
     export ANDROID_BOOTLOGO 1
     export ANDROID_ROOT /system
     export ANDROID_ASSETS /system/app
@@ -19,21 +21,17 @@ loglevel 3
 # Backward compatibility
     symlink /system/etc /etc
     symlink /sys/kernel/debug /d
+    mkdir /system
+    mkdir /xbin
     symlink /xbin /system/bin
 
 # insert modules
-    insmod /lib/modules/xsr.ko
-    insmod /lib/modules/xsr_stl.ko
-    insmod /lib/modules/rfs.ko
     insmod /lib/modules/dpram.ko
-
     insmod /lib/modules/param.ko
 
     mkdir /sdcard
 
 # create mountpoints and mount tmpfs on sqlite_stmt_journals
-    mkdir /xbin
-    mkdir /system
     mkdir /data 0771 system system
     mkdir /cache 0770 system cache
     mkdir /config 0500 root root

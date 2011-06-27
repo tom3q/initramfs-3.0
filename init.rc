@@ -9,7 +9,7 @@ loglevel 3
 
 # setup the global environment
     export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin:/xbin
-    export LD_LIBRARY_PATH /vendor/lib:/system/lib
+    export LD_LIBRARY_PATH /vendor/lib:/system/lib:/xbin/lib
     export ANDROID_BOOTLOGO 1
     export ANDROID_ROOT /system
     export ANDROID_ASSETS /system/app
@@ -24,9 +24,6 @@ loglevel 3
     symlink /sys/kernel/debug /d
 
 # Load modules
-    insmod /lib/modules/xsr.ko
-    insmod /lib/modules/xsr_stl.ko
-    insmod /lib/modules/rfs.ko
     insmod /lib/modules/dpram.ko
     insmod /lib/modules/multipdp.ko
     insmod /lib/modules/s3c_rotator.ko
@@ -39,7 +36,6 @@ loglevel 3
     insmod /lib/modules/s3c_camera.ko
     insmod /lib/modules/vibrator.ko
     insmod /lib/modules/param.ko
-    insmod /lib/modules/qt5480.ko
 
 # Right now vendor lives on the same filesystem as system,
 # but someday that may change.
@@ -113,25 +109,20 @@ on fs
 # mount mtd partitions
     # Mount /system rw first to give the filesystem a chance to save a checkpoint
     # /system
-    mount rfs /dev/stl6 /system rw xattr,check=no
-    mount ext2 /dev/stl6 /system rw nosuid nodev noatime nodiratime
+    mount ubifs /dev/ubi0_0 /system
+    mount ubifs /dev/ubi0_0 /system ro remount
 
     # /data
-    mount rfs /dev/stl5 /data nosuid nodev xattr,check=no
-    mount ext2 /dev/stl5 /data nosuid nodev noatime nodiratime
-    mount ext4 /dev/stl5 /data nosuid nodev noatime nodiratime data=ordered
+    mount ubifs /dev/ubi1_0 /data rw
 
-    # /cache
-    mount rfs /dev/stl7 /cache nosuid nodev xattr,check=no
-    mount ext2 /dev/stl7 /cache nosuid nodev noatime nodiratime
-    mount ext4 /dev/stl7 /cache nosuid nodev noatime nodiratime data=ordered
+    # /cache (part of /data)
+    mount ubifs /dev/ubi2_0 /cache rw
 
     # /efs
-    mount rfs /dev/stl10 /efs nosuid nodev xattr,check=no
+    # mount rfs /dev/stl10 /efs nosuid nodev xattr,check=no
 
     # /xbin
-    chmod 0666 /dev/bml8
-    mount squashfs /dev/bml8 /xbin ro loop
+    mount squashfs /dev/block/mtdblock7 /xbin ro loop
 
 on post-fs
     # once everything is setup, no need to modify /
@@ -163,6 +154,7 @@ on post-fs
     # Same reason as /data above
     chown system cache /cache
     chmod 0770 /cache
+    symlink /data/download /cache/download
 
     # This may have been created by the recovery system with odd permissions
     chown system cache /cache/recovery
@@ -212,6 +204,10 @@ on post-fs
     chown root root /cache/lost+found
     chmod 0770 /cache/lost+found
 
+###############
+# Is this really needed? (tom3q)
+###############
+
 # for wifi
     setprop wifi.interface "eth0"
 
@@ -252,6 +248,10 @@ on post-fs
 
     chown root net_raw /dev/socket
     chmod 0775 /dev/socket
+
+###############
+# End of note (tom3q)
+###############
 
 on boot
 # basic network init
@@ -342,6 +342,10 @@ on boot
     chown system system /sys/kernel/ipv4/tcp_rmem_max
     chown root radio /proc/cmdline
 
+###############
+# Is this really needed? (tom3q)
+###############
+
 # +++++++++++++++++++++++++++++++++++++++++++
 # for Bluetooth
     chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
@@ -364,6 +368,10 @@ on boot
 
     chmod 6777 /system/bin/brcm_dutMode
 # +++++++++++++++++++++++++++++++++++++++++++
+
+###############
+# End of note (tom3q)
+###############
 
 # Define TCP buffer sizes for various networks
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
@@ -422,6 +430,10 @@ service netd /system/bin/netd
 
 service debuggerd /system/bin/debuggerd
 
+###############
+# Verify this (tom3q)
+###############
+
 # Wifi
 service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c/data/misc/wifi/bcm_supp.conf
     disabled
@@ -439,7 +451,11 @@ service wlservice /system/bin/wlservice
     disabled
     oneshot
 
-service efs-daemon /system/bin/efsd
+###############
+# End of note (tom3q)
+###############
+
+# service efs-daemon /system/bin/efsd
 
 service ril-daemon /system/bin/rild
     socket rild stream 660 root radio
@@ -478,6 +494,10 @@ service bluetoothd /system/bin/bluetoothd -n /etc/bluetooth/main.conf
     group bluetooth net_bt_admin misc
     disabled
 
+###############
+# Verify this (tom3q)
+###############   
+
 service btld /system/bin/logwrapper /system/bin/btld -hb 3000000 -hp /dev/s3c_serial1 -lpm 1
     user root
     group bluetooth net_bt_admin
@@ -489,6 +509,10 @@ service hciattach /system/bin/brcm_patchram_plus -d --baudrate 3000000 --patchra
     group bluetooth net_bt_admin
     disabled
     oneshot
+
+###############
+# End of note (tom3q)
+###############
 
 service hfag /system/bin/sdptool add --channel=10 HFAG
     user bluetooth
@@ -517,8 +541,16 @@ service pbap /system/bin/sdptool add --channel=19 PBAP
 service installd /system/bin/installd
     socket installd stream 600 system system
 
+###############
+# Verify this (tom3q)
+###############
+
 #service flash_recovery /system/etc/install-recovery.sh
 #    oneshot
+
+###############
+# End of note (tom3q)
+###############
 
 service racoon /system/bin/racoon
     socket racoon stream 600 system system
