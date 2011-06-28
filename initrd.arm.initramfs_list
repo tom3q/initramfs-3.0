@@ -10,34 +10,33 @@ dir /tmp 0755 0 0
 file /recovery.rc /home/tom3q/android/initramfs-2.6.38/recovery.rc 0644 0 0
 file /init /home/tom3q/android/initramfs-2.6.38/init 0755 0 0
 file /init.rc /home/tom3q/android/initramfs-2.6.38/init.rc 0644 0 0
-file /init.GT-I5700.rc /home/tom3q/android/initramfs-2.6.38/init.GT-I5700.rc 0644 0 0
+file /init.gt-i5700.rc /home/tom3q/android/initramfs-2.6.38/init.gt-i5700.rc 0644 0 0
 file /ueventd.goldfish.rc /home/tom3q/android/initramfs-2.6.38/ueventd.goldfish.rc 0644 0 0
 file /ueventd.rc /home/tom3q/android/initramfs-2.6.38/ueventd.rc 0644 0 0
-file /ueventd.GT-I5700.rc /home/tom3q/android/initramfs-2.6.38/ueventd.GT-I5700.rc 0644 0 0
+file /ueventd.gt-i5700.rc /home/tom3q/android/initramfs-2.6.38/ueventd.gt-i5700.rc 0644 0 0
 file /default.prop /home/tom3q/android/initramfs-2.6.38/default.prop 0644 0 0
 slink /etc /system/etc 0777 0 0
 
 # /lib
 slink /lib/ld-uClibc.so.0 /xbin/lib/ld-uClibc.so.0 0777 0 0
 dir /lib/modules 0755 0 0
-file /lib/modules/crc32.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/crc32.ko 0644 0 0
-file /lib/modules/dhd.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/dhd.ko 0644 0 0
-file /lib/modules/rfs.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/rfs.ko 0644 0 0
-file /lib/modules/s3c_g3d.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_g3d.ko 0644 0 0
-file /lib/modules/s3c_cmm.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_cmm.ko 0644 0 0
-file /lib/modules/s3c_camera.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_camera.ko 0644 0 0
-file /lib/modules/dpram.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/dpram.ko 0644 0 0
-file /lib/modules/s3c_rotator.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_rotator.ko 0644 0 0
-file /lib/modules/s3c_jpeg.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_jpeg.ko 0644 0 0
+#file /lib/modules/crc32.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/crc32.ko 0644 0 0
+#file /lib/modules/dhd.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/dhd.ko 0644 0 0
+#file /lib/modules/s3c_g3d.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_g3d.ko 0644 0 0
+#file /lib/modules/s3c_cmm.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_cmm.ko 0644 0 0
+#file /lib/modules/s3c_camera.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_camera.ko 0644 0 0
+#file /lib/modules/dpram.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/dpram.ko 0644 0 0
+#file /lib/modules/s3c_rotator.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_rotator.ko 0644 0 0
+#file /lib/modules/s3c_jpeg.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_jpeg.ko 0644 0 0
 file /lib/modules/s3c_g2d_driver.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_g2d_driver.ko 0644 0 0
-file /lib/modules/param.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/param.ko 0644 0 0
-file /lib/modules/multipdp.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/multipdp.ko 0644 0 0
-file /lib/modules/s3c_pp.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_pp.ko 0644 0 0
-file /lib/modules/s3c_mfc.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_mfc.ko 0644 0 0
-file /lib/modules/vibrator.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/vibrator.ko 0644 0 0
-file /lib/modules/bnep.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/bnep.ko 0644 0 0
-file /lib/modules/tun.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/tun.ko 0644 0 0
-file /lib/modules/cifs.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/cifs.ko 0644 0 0
+#file /lib/modules/param.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/param.ko 0644 0 0
+#file /lib/modules/multipdp.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/multipdp.ko 0644 0 0
+#file /lib/modules/s3c_pp.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_pp.ko 0644 0 0
+#file /lib/modules/s3c_mfc.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_mfc.ko 0644 0 0
+#file /lib/modules/vibrator.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/vibrator.ko 0644 0 0
+#file /lib/modules/bnep.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/bnep.ko 0644 0 0
+#file /lib/modules/tun.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/tun.ko 0644 0 0
+#file /lib/modules/cifs.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/cifs.ko 0644 0 0
 
 # /sbin
 file /sbin/su /home/tom3q/android/initramfs-2.6.38/sbin/su 6755 0 0

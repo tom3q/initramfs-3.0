@@ -1,46 +1,26 @@
-# for Samsung Spica i5700
-/dev/s3c-mfc              0664   system     graphics
-/dev/s3c-rotator          0664   system     graphics
-/dev/s3c-jpg              0660   system     camera
-/dev/s3c-g3d              0666   system     graphics
-/dev/s3c-pp               0664   system     graphics
-/dev/s3c-cmm              0664   system     graphics
-/dev/s3c-g2d              0666   system     graphics
-/dev/s3c-mem              0660   system     graphics
-/dev/pmem_gpu1            0666   system     graphics
-/dev/pmem_jpeg            0666   system     graphics
-/dev/pmem_picture         0660   system     graphics
-/dev/pmem_preview         0660   system     graphics
-/dev/pmem_stream2         0660   system     graphics
-/dev/pmem_stream          0660   system     graphics
-/dev/pmem_render          0660   system     graphics
 
-/dev/mem                  0666   root       root
-
-
-/dev/graphics             0664   system     graphics
 /dev/video0               0660   system     camera
 /dev/video1               0660   system     camera
+/dev/video2               0660   system     camera
+/dev/s3c-jpg              0660   system     camera
+/dev/s3c-mem              0660   system     system
+/dev/s3c-mfc              0660   system     graphics
+/dev/s3c-g2d              0660   system     graphics
 
-/dev/dpram0               0664   radio      radio
-/dev/dpram1               0664   radio      radio
-/dev/i2c-5                0666   radio      radio
-/dev/dpramerr             0664   radio      radio
-/dev/multipdp             0664   radio      radio
-/dev/s3c2410_serial0      0666   radio      radio
-/dev/ttyCSD0              0777   radio      radio
-/dev/ttyDUN0              0664   radio      radio
-/dev/ttyTRFB0             0664   radio      radio
-/dev/ttySMD0              0660   radio      radio
-/dev/s3c_serial0          0666   radio      radio
-
-/dev/s3c_serial1          0666   bluetooth  bluetooth
-
-/dev/ttyGPS0              0664   system     system
-/dev/ttyXTRA0             0664   system     system
+/dev/modem_ctl            0660   radio      radio
+/dev/modem_fmt            0660   radio      radio
+/dev/modem_rfs            0660   radio      radio
+/dev/s3c2410_serial3      0660   radio      radio
+/dev/block/mtdblock10     0660   radio      radio
+/dev/mtd/mtd10ro          0660   radio      radio
 
 # for Sensor HAL
-#/dev/akm8973              0660   system     system
-#/dev/accelerometer        0660   system     system
-/dev/akm8973_aot          0777   system     system
-/dev/akm8973_daemon       0777   system     system
+/dev/yamaha_compass       0660   system     system
+/dev/akm8973              0660   system     system
+/dev/accelerometer        0660   system     system
+
+# for GPS
+/dev/s3c2410_serial1      0600   gps        gps
+
+# for FM Radio
+/dev/radio0               0666   system     audio
