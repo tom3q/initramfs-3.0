@@ -33,10 +33,6 @@ on boot
 
 # change permission for uart_switch
     chown radio radio /sys/class/sec/uart_switch/UART_SEL/value
-    chown compass root /sys/class/input/input3/distortion
-    chown compass root /sys/class/input/input3/offsets
-    chown compass root /sys/class/input/input3/shape
-    chown compass root /sys/class/input/input3/threshold
     chmod 660 /sys/class/sec/uart_switch/UART_SEL/value
 
 # change permission for compass
@@ -51,9 +47,7 @@ on boot
     chmod 660 /sys/class/sec/gps/GPS_PWR_EN/value
 
 on fs
-    # Mount /system rw first to give the filesystem a chance to save a checkpoint
-    # /system
-    mount ubifs /dev/ubi0_0 /system
+    # Remount /system read-only, because it was mounted rw first (see: init.rc)
     mount ubifs /dev/ubi0_0 /system ro remount
 
     # /data
@@ -70,16 +64,14 @@ on fs
 #    chmod 770 /efs/imei
 
 # permissions for bluetooth.
-    chown bluetooth bluetooth /efs/bluetooth
-    chown bluetooth bluetooth ro.bt.bdaddr_path
-    chown bluetooth bluetooth /dev/s3c2410_serial0
-    chmod 0600 /dev/s3c2410_serial0
-    chmod 0660 /sys/class/rfkill/rfkill0/state
-    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
-    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
+#    chown bluetooth bluetooth /efs/bluetooth
+#    chown bluetooth bluetooth ro.bt.bdaddr_path
+#    chmod 0660 /sys/class/rfkill/rfkill0/state
+#    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
+#    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
 
 # Permissions for System Server and daemons.
-    chown system system /sys/class/backlight/s6d05a_bl/brightness
+    chown system system /sys/class/backlight/s6d05a-lcd/brightness
 
 on post-fs
     # load modules
@@ -95,7 +87,7 @@ on post-fs
     # Create dump dir and collect dumps.
     # Do this before we mount cache so eventually we can use cache for
     # storing dumps on platforms which do not have a dedicated dump partition.
-   
+
     mkdir /data/dontpanic
     chown root log /data/dontpanic
     chmod 0750 /data/dontpanic
@@ -144,9 +136,7 @@ on post-fs
     chmod 0660 /data/misc/wifi/wpa_supplicant.conf
     mkdir /data/local 0771 shell shell
     mkdir /data/local/tmp 0771 shell shell
-    #mkdir /data/data 0771 system system
-    # symlink /data/data to /datadata for performance
-    symlink /datadata /data/data
+    mkdir /data/data 0771 system system
 
     mkdir /data/app-private 0771 system system
     mkdir /data/app 0771 system system
@@ -174,11 +164,11 @@ on post-fs
     # allow net_raw to have access to /dev/socket directory
     chown root net_raw /dev/socket
     chmod 0775 /dev/socket
-    
+
     #symlinks for samsung RIL
     symlink /radio/modem.bin /dev/block/mtdblock10
-   
-    
+
+
 # allow system to modify cpufreq control files
     chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
     chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
@@ -187,11 +177,7 @@ on post-fs
     chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
     chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
 
-# 3D init
-service gpsd /system/vendor/bin/gpsd -c /vendor/etc/gps.xml
-    socket gps seqpacket 0660 gps system
-    user gps
-    group system inet
+
 
 service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c/data/misc/wifi/wpa_supplicant.conf
     socket wpa_eth0 dgram 0660 wifi wifi
@@ -218,7 +204,7 @@ service bugreport /system/bin/dumpstate -d -v -o /sdcard/bugreports/bugreport
     disabled
     oneshot
     keycodes 114 115 116
-    
+
 service servicemanager /system/bin/servicemanager
     user system
     critical
