@@ -22,7 +22,7 @@ slink /lib/ld-uClibc.so.0 /xbin/lib/ld-uClibc.so.0 0777 0 0
 dir /lib/modules 0755 0 0
 #file /lib/modules/crc32.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/crc32.ko 0644 0 0
 #file /lib/modules/dhd.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/dhd.ko 0644 0 0
-#file /lib/modules/s3c_g3d.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_g3d.ko 0644 0 0
+file /lib/modules/s3c_g3d.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_g3d.ko 0644 0 0
 #file /lib/modules/s3c_cmm.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_cmm.ko 0644 0 0
 #file /lib/modules/s3c_camera.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_camera.ko 0644 0 0
 #file /lib/modules/dpram.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/dpram.ko 0644 0 0
