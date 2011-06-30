@@ -70,11 +70,3 @@ file /system/etc/ld.so.cache /home/tom3q/android/initramfs-2.6.38/system/etc/ld.
 
 # /tmp
 dir /tmp/bootchart 0755 0 0
-file /tmp/s3c-keypad-rev0020.kl /home/tom3q/android/initramfs-2.6.38/tmp/s3c-keypad-rev0020.kl 0644 0 0
-file /tmp/s3c-keypad-rev0000.kcm.bin /home/tom3q/android/initramfs-2.6.38/tmp/s3c-keypad-rev0000.kcm.bin 0666 0 0
-file /tmp/s3c-keypad-rev0020.kcm.bin /home/tom3q/android/initramfs-2.6.38/tmp/s3c-keypad-rev0020.kcm.bin 0666 0 0
-file /tmp/s3c-keypad-rev0000.kl /home/tom3q/android/initramfs-2.6.38/tmp/s3c-keypad-rev0000.kl 0644 0 0
-file /tmp/s3c-keypad-rev0010.kl /home/tom3q/android/initramfs-2.6.38/tmp/s3c-keypad-rev0010.kl 0644 0 0
-file /tmp/sec_headset.kl /home/tom3q/android/initramfs-2.6.38/tmp/sec_headset.kl 0755 0 0
-file /tmp/s3c-keypad-rev0010.kcm.bin /home/tom3q/android/initramfs-2.6.38/tmp/s3c-keypad-rev0010.kcm.bin 0666 0 0
-file /tmp/bootchart/stgloc /home/tom3q/android/initramfs-2.6.38/tmp/bootchart/stgloc 0644 0 0
