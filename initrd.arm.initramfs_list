@@ -62,11 +62,10 @@ file /res/images/icon_error.png /home/tom3q/android/initramfs-2.6.38/res/images/
 file /res/images/icon_installing.png /home/tom3q/android/initramfs-2.6.38/res/images/icon_installing.png 0644 0 0
 file /res/images/progress_fill.png /home/tom3q/android/initramfs-2.6.38/res/images/progress_fill.png 0644 0 0
 file /res/images/progress_empty.png /home/tom3q/android/initramfs-2.6.38/res/images/progress_empty.png 0644 0 0
-file /res/recovery.fstab /home/tom3q/android/initramfs-2.6.38/res/recovery.fstab 0644 0 0
 
 # /system
 dir /system/etc 0755 0 0
-file /system/etc/ld.so.cache /home/tom3q/android/initramfs-2.6.38/system/etc/ld.so.cache 0644 0 0
+file /system/etc/recovery.fstab /home/tom3q/android/initramfs-2.6.38/system/etc/recovery.fstab 0644 0 0
 
 # /tmp
 dir /tmp/bootchart 0755 0 0
