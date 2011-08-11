@@ -28,7 +28,7 @@ file /lib/modules/s3c_g3d.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3
 #file /lib/modules/dpram.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/dpram.ko 0644 0 0
 #file /lib/modules/s3c_rotator.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_rotator.ko 0644 0 0
 #file /lib/modules/s3c_jpeg.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_jpeg.ko 0644 0 0
-file /lib/modules/s3c_g2d_driver.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_g2d_driver.ko 0644 0 0
+file /lib/modules/s3c_g2d.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_g2d.ko 0644 0 0
 #file /lib/modules/param.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/param.ko 0644 0 0
 #file /lib/modules/multipdp.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/multipdp.ko 0644 0 0
 #file /lib/modules/s3c_pp.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3c_pp.ko 0644 0 0
