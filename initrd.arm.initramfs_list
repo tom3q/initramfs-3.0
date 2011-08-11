@@ -42,8 +42,6 @@ file /lib/modules/s3c_g2d.ko /home/tom3q/android/initramfs-2.6.38/lib/modules/s3
 file /sbin/su /home/tom3q/android/initramfs-2.6.38/sbin/su 6755 0 0
 file /sbin/recovery /home/tom3q/android/initramfs-2.6.38/sbin/recovery 0755 0 0
 file /sbin/adbd /home/tom3q/android/initramfs-2.6.38/sbin/adbd 0755 0 0
-file /sbin/adbd2 /home/tom3q/android/initramfs-2.6.38/sbin/adbd2 0755 0 0
-file /sbin/ash /home/tom3q/android/initramfs-2.6.38/sbin/ash 0755 0 0
 file /sbin/fix_permissions /home/tom3q/android/initramfs-2.6.38/sbin/fix_permissions 0755 0 0
 file /sbin/nandroid-md5.sh /home/tom3q/android/initramfs-2.6.38/sbin/nandroid-md5.sh 0755 0 0
 file /sbin/remount /home/tom3q/android/initramfs-2.6.38/sbin/remount 0755 0 0
