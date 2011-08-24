@@ -1,5 +1,76 @@
+# /
+dir /lib 0755 0 0
+dir /sys 0755 0 0
+dir /sbin 0755 0 0
+dir /res 0755 0 0
+dir /system 0755 0 0
+dir /proc 0755 0 0
+dir /dev 0755 0 0
+dir /tmp 0755 0 0
+file /recovery.rc ${INITRAMFS_SOURCE_PATH}/recovery.rc 0644 0 0
+file /init ${INITRAMFS_SOURCE_PATH}/init 0755 0 0
+file /init.rc ${INITRAMFS_SOURCE_PATH}/init.rc 0644 0 0
+file /init.spica.rc ${INITRAMFS_SOURCE_PATH}/init.spica.rc 0644 0 0
+file /ueventd.goldfish.rc ${INITRAMFS_SOURCE_PATH}/ueventd.goldfish.rc 0644 0 0
+file /ueventd.rc ${INITRAMFS_SOURCE_PATH}/ueventd.rc 0644 0 0
+file /ueventd.spica.rc ${INITRAMFS_SOURCE_PATH}/ueventd.spica.rc 0644 0 0
+file /default.prop ${INITRAMFS_SOURCE_PATH}/default.prop 0644 0 0
+slink /etc /system/etc 0777 0 0
+
+# /lib
+slink /lib/ld-uClibc.so.0 /xbin/lib/ld-uClibc.so.0 0777 0 0
+dir /lib/modules 0755 0 0
+#file /lib/modules/crc32.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/crc32.ko 0644 0 0
+#file /lib/modules/dhd.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/dhd.ko 0644 0 0
+file /lib/modules/s3c_g3d.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_g3d.ko 0644 0 0
+#file /lib/modules/s3c_cmm.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_cmm.ko 0644 0 0
+#file /lib/modules/s3c_camera.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_camera.ko 0644 0 0
+#file /lib/modules/dpram.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/dpram.ko 0644 0 0
+#file /lib/modules/s3c_rotator.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_rotator.ko 0644 0 0
+#file /lib/modules/s3c_jpeg.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_jpeg.ko 0644 0 0
+file /lib/modules/s3c_g2d.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_g2d.ko 0644 0 0
+#file /lib/modules/param.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/param.ko 0644 0 0
+#file /lib/modules/multipdp.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/multipdp.ko 0644 0 0
+#file /lib/modules/s3c_pp.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_pp.ko 0644 0 0
+#file /lib/modules/s3c_mfc.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_mfc.ko 0644 0 0
+#file /lib/modules/vibrator.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/vibrator.ko 0644 0 0
+#file /lib/modules/bnep.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/bnep.ko 0644 0 0
+#file /lib/modules/tun.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/tun.ko 0644 0 0
+#file /lib/modules/cifs.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/cifs.ko 0644 0 0
+
+# /sbin
+file /sbin/su ${INITRAMFS_SOURCE_PATH}/sbin/su 6755 0 0
+file /sbin/recovery ${INITRAMFS_SOURCE_PATH}/sbin/recovery 0755 0 0
+file /sbin/adbd ${INITRAMFS_SOURCE_PATH}/sbin/adbd 0755 0 0
+file /sbin/fix_permissions ${INITRAMFS_SOURCE_PATH}/sbin/fix_permissions 0755 0 0
+file /sbin/nandroid-md5.sh ${INITRAMFS_SOURCE_PATH}/sbin/nandroid-md5.sh 0755 0 0
+file /sbin/remount ${INITRAMFS_SOURCE_PATH}/sbin/remount 0755 0 0
+slink /sbin/ueventd /init 0755 0 0
+
+# /res
+dir /res/images 0755 0 0
+file /res/images/icon_clockwork.png ${INITRAMFS_SOURCE_PATH}/res/images/icon_clockwork.png 0644 0 0
+file /res/images/indeterminate1.png ${INITRAMFS_SOURCE_PATH}/res/images/indeterminate1.png 0644 0 0
+file /res/images/indeterminate2.png ${INITRAMFS_SOURCE_PATH}/res/images/indeterminate2.png 0644 0 0
+file /res/images/indeterminate3.png ${INITRAMFS_SOURCE_PATH}/res/images/indeterminate3.png 0644 0 0
+file /res/images/indeterminate4.png ${INITRAMFS_SOURCE_PATH}/res/images/indeterminate4.png 0644 0 0
+file /res/images/indeterminate5.png ${INITRAMFS_SOURCE_PATH}/res/images/indeterminate5.png 0644 0 0
+file /res/images/indeterminate6.png ${INITRAMFS_SOURCE_PATH}/res/images/indeterminate6.png 0644 0 0
+file /res/images/icon_error.png ${INITRAMFS_SOURCE_PATH}/res/images/icon_error.png 0644 0 0
+file /res/images/icon_installing.png ${INITRAMFS_SOURCE_PATH}/res/images/icon_installing.png 0644 0 0
+file /res/images/progress_fill.png ${INITRAMFS_SOURCE_PATH}/res/images/progress_fill.png 0644 0 0
+file /res/images/progress_empty.png ${INITRAMFS_SOURCE_PATH}/res/images/progress_empty.png 0644 0 0
+
+# /system
+dir /system/etc 0755 0 0
+file /system/etc/recovery.fstab ${INITRAMFS_SOURCE_PATH}/system/etc/recovery.fstab 0644 0 0
+
+# /tmp
+dir /tmp/bootchart 0755 0 0
 dir /bin 0755 0 0
-file /bin/busybox /home/tom3q/android/initramfs-2.6.38/bin/busybox 6755 0 0
+
+# Busybox
+file /bin/busybox ${INITRAMFS_SOURCE_PATH}/bin/busybox 6755 0 0
 slink /bin/tty /bin/busybox 0755 0 0
 slink /bin/deallocvt /bin/busybox 0755 0 0
 slink /bin/tr /bin/busybox 0755 0 0
