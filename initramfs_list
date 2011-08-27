@@ -20,23 +20,11 @@ slink /etc /system/etc 0777 0 0
 # /lib
 slink /lib/ld-uClibc.so.0 /xbin/lib/ld-uClibc.so.0 0777 0 0
 dir /lib/modules 0755 0 0
-#file /lib/modules/crc32.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/crc32.ko 0644 0 0
-#file /lib/modules/dhd.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/dhd.ko 0644 0 0
+file /lib/modules/bcmdhd.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/bcmdhd.ko 0644 0 0
 file /lib/modules/s3c_g3d.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_g3d.ko 0644 0 0
-#file /lib/modules/s3c_cmm.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_cmm.ko 0644 0 0
-#file /lib/modules/s3c_camera.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_camera.ko 0644 0 0
-#file /lib/modules/dpram.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/dpram.ko 0644 0 0
-#file /lib/modules/s3c_rotator.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_rotator.ko 0644 0 0
-#file /lib/modules/s3c_jpeg.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_jpeg.ko 0644 0 0
+file /lib/modules/dpram.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/dpram.ko 0644 0 0
+file /lib/modules/multipdp.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/multipdp.ko 0644 0 0
 file /lib/modules/s3c_g2d.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_g2d.ko 0644 0 0
-#file /lib/modules/param.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/param.ko 0644 0 0
-#file /lib/modules/multipdp.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/multipdp.ko 0644 0 0
-#file /lib/modules/s3c_pp.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_pp.ko 0644 0 0
-#file /lib/modules/s3c_mfc.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_mfc.ko 0644 0 0
-#file /lib/modules/vibrator.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/vibrator.ko 0644 0 0
-#file /lib/modules/bnep.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/bnep.ko 0644 0 0
-#file /lib/modules/tun.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/tun.ko 0644 0 0
-#file /lib/modules/cifs.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/cifs.ko 0644 0 0
 
 # /sbin
 file /sbin/su ${INITRAMFS_SOURCE_PATH}/sbin/su 6755 0 0

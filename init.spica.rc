@@ -15,8 +15,6 @@ on boot
     setprop ro.build.product spica
     setprop ro.product.device spica
     setprop ro.radio.use-ppp no
-    #setprop ro.radio.noril yes
-    #setprop ro.bt.bdaddr_path "/efs/bluetooth/bt_addr"
 
 # fake some battery state
     setprop status.battery.state Slow
@@ -57,11 +55,12 @@ on fs
     mount ubifs /dev/ubi2_0 /cache rw
 
 # We chown/chmod /efs because mount is run as root + defaults
-#    mkdir /efs 0775 radio radio
-#    mount yaffs2 /dev/block/mtdblock4 /efs
-#    chown radio radio /efs
-#    chmod 770 /efs/bluetooth
-#    chmod 770 /efs/imei
+    mkdir /efs 0775 radio radio
+    mount ubifs /dev/ubi3_0 /efs rw
+    chown radio radio /efs
+    chmod 775 /efs
+    chmod 770 /efs/bluetooth
+    chmod 770 /efs/imei
 
 # permissions for bluetooth.
 #    chown bluetooth bluetooth /efs/bluetooth
@@ -77,6 +76,8 @@ on post-fs
     # load modules
     insmod /lib/modules/s3c_g2d.ko
     insmod /lib/modules/s3c_g3d.ko
+    insmod /lib/modules/dpram.ko
+    insmod /lib/modules/multipdp.ko
 
     # remove /sbin/sh so that "adb install" can work properly
     exec /sbin/setupenv.sh
@@ -180,16 +181,16 @@ on post-fs
 
 
 
-service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c/data/misc/wifi/wpa_supplicant.conf
-    socket wpa_eth0 dgram 0660 wifi wifi
+service wpa_supplicant /system/bin/wpa_supplicant -Dwext -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
+    socket wpa_wlan0 dgram 0660 wifi wifi
     disabled
     oneshot
 
-service dhcpcd_eth0 /system/bin/dhcpcd -ABKL
+service dhcpcd_wlan0 /system/bin/dhcpcd -ABKL
     disabled
     oneshot
 
-service iprenew_eth0 /system/bin/dhcpcd -n
+service iprenew_wlan0 /system/bin/dhcpcd -n
     disabled
     oneshot
 
@@ -221,11 +222,13 @@ service netd /system/bin/netd
 
 service debuggerd /system/bin/debuggerd
 
-#service ril-daemon /system/bin/rild
-#    socket rild stream 660 root radio
-#    socket rild-debug stream 660 radio system
-#    user root
-#    group radio cache inet misc audio sdcard_rw net_admin net_raw
+service efs-daemon /system/bin/efsd
+
+service ril-daemon /system/bin/rild
+    socket rild stream 660 root radio
+    socket rild-debug stream 660 radio system
+    user root
+    group radio cache inet misc audio sdcard_rw net_admin net_raw
 
 service zygote /system/bin/app_process -Xzygote /system/bin --zygote --start-system-server
     socket zygote stream 666
