@@ -23,7 +23,6 @@ dir /lib/modules 0755 0 0
 file /lib/modules/bcmdhd.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/bcmdhd.ko 0644 0 0
 file /lib/modules/s3c_g3d.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_g3d.ko 0644 0 0
 file /lib/modules/dpram.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/dpram.ko 0644 0 0
-file /lib/modules/multipdp.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/multipdp.ko 0644 0 0
 file /lib/modules/s3c_g2d.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_g2d.ko 0644 0 0
 
 # /sbin
