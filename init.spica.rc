@@ -54,6 +54,9 @@ on fs
     # /cache
     mount ubifs /dev/ubi2_0 /cache rw
 
+# Show boot logo as early as possible
+    exec /system/bin/show_logo
+
 # We chown/chmod /efs because mount is run as root + defaults
     mkdir /efs 0775 radio radio
     mount ubifs /dev/ubi3_0 /efs rw
@@ -193,6 +196,14 @@ service dhcpcd_wlan0 /system/bin/dhcpcd -ABKL
 service iprenew_wlan0 /system/bin/dhcpcd -n
     disabled
     oneshot
+
+service bdaddr /system/bin/bdaddr_read
+    user root
+    disabled
+    oneshot
+
+on property:init.svc.bootanim=running
+    start bdaddr
 
 service hciattach /system/bin/brcm_patchram_plus --enable_hci --enable_lpm \
     --baudrate 3000000 --patchram /system/etc/bcm4325.hcd /dev/ttySAC1
