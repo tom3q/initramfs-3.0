@@ -15,6 +15,7 @@ file /ueventd.goldfish.rc ${INITRAMFS_SOURCE_PATH}/ueventd.goldfish.rc 0644 0 0
 file /ueventd.rc ${INITRAMFS_SOURCE_PATH}/ueventd.rc 0644 0 0
 file /ueventd.spica.rc ${INITRAMFS_SOURCE_PATH}/ueventd.spica.rc 0644 0 0
 file /default.prop ${INITRAMFS_SOURCE_PATH}/default.prop 0644 0 0
+file /bootlogo.png ${INITRAMFS_SOURCE_PATH}/bootlogo.png 0644 0 0
 slink /etc /system/etc 0777 0 0
 
 # /lib
