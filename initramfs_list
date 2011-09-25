@@ -19,7 +19,6 @@ file /bootlogo.png ${INITRAMFS_SOURCE_PATH}/bootlogo.png 0644 0 0
 slink /etc /system/etc 0777 0 0
 
 # /lib
-slink /lib/ld-uClibc.so.0 /xbin/lib/ld-uClibc.so.0 0777 0 0
 dir /lib/modules 0755 0 0
 file /lib/modules/bcmdhd.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/bcmdhd.ko 0644 0 0
 file /lib/modules/s3c_g3d.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_g3d.ko 0644 0 0

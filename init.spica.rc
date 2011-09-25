@@ -56,7 +56,7 @@ on fs
 
 # We chown/chmod /efs because mount is run as root + defaults
     mkdir /efs 0775 radio radio
-    mount ubifs /dev/ubi3_0 /efs rw
+    mount ubifs /dev/ubi3_0 /efs rw sync
     chown radio radio /efs
     chmod 775 /efs
     chmod 770 /efs/bluetooth
@@ -170,8 +170,10 @@ on post-fs
     chmod 0775 /dev/socket
 
     #symlinks for samsung RIL
-    symlink /radio/modem.bin /dev/block/mtdblock10
-
+    mkdir /radio 0775 radio radio
+    symlink /dev/block/bml10 /radio/modem.bin
+    chown radio radio /radio/modem.bin
+    chmod 0664 /radio/modem.bin
 
 # allow system to modify cpufreq control files
     chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
@@ -230,6 +232,7 @@ service vold /system/bin/vold
 
 service netd /system/bin/netd
     socket netd stream 0660 root system
+    socket dnsproxyd stream 0660 root inet
 
 service debuggerd /system/bin/debuggerd
 
