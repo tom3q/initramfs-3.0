@@ -26,7 +26,6 @@ file /lib/modules/dpram.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/dpram.ko 0644 0 
 file /lib/modules/s3c_g2d.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/s3c_g2d.ko 0644 0 0
 
 # /sbin
-file /sbin/su ${INITRAMFS_SOURCE_PATH}/sbin/su 6755 0 0
 file /sbin/recovery ${INITRAMFS_SOURCE_PATH}/sbin/recovery 0755 0 0
 file /sbin/adbd ${INITRAMFS_SOURCE_PATH}/sbin/adbd 0755 0 0
 file /sbin/fix_permissions ${INITRAMFS_SOURCE_PATH}/sbin/fix_permissions 0755 0 0
@@ -141,7 +140,6 @@ slink /bin/seq /bin/busybox 0755 0 0
 slink /bin/sh /bin/busybox 0755 0 0
 slink /bin/clear /bin/busybox 0755 0 0
 slink /bin/dd /bin/busybox 0755 0 0
-slink /bin/su /bin/busybox 0755 0 0
 slink /bin/telnet /bin/busybox 0755 0 0
 slink /bin/chgrp /bin/busybox 0755 0 0
 slink /bin/install /bin/busybox 0755 0 0
