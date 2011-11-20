@@ -29,20 +29,9 @@ on boot
 # phone
     setprop ro.telephony.call_ring.multiple 0
 
-# change permission for uart_switch
-    chown radio radio /sys/class/sec/uart_switch/UART_SEL/value
-    chmod 660 /sys/class/sec/uart_switch/UART_SEL/value
-
-# change permission for compass
-    chown compass input /sys/class/input/input3/offsets
-    chown compass input /sys/class/input/input3/shape
-    chown compass input /sys/class/input/input3/distortion
-    chown compass input /sys/class/input/input3/threshold
-# create data/gps for GPS demon
-    mkdir /data/gps 700 gps system
-    chown gps system /data/gps
-    chown gps root /sys/class/sec/gps/GPS_PWR_EN/value
-    chmod 660 /sys/class/sec/gps/GPS_PWR_EN/value
+# change permission for accelerometer
+    chown system system /sys/class/input/input3/poll
+    chmod 0660 /sys/class/input/input3/poll
 
 on fs
     # Remount /system read-only, because it was mounted rw first (see: init.rc)
@@ -183,8 +172,10 @@ on post-fs
     chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
     chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
 
-# reduce cpufreq latency to 50ms
-    write /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate 50000
+# configure conservative cpufreq governor
+    write /sys/devices/system/cpu/cpufreq/conservative/sampling_rate 200000
+    write /sys/devices/system/cpu/cpufreq/conservative/sampling_down_factor 3
+    write /sys/devices/system/cpu/cpufreq/conservative/freq_step 17
 
 service wpa_supplicant /system/bin/wpa_supplicant -Dwext -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
     socket wpa_wlan0 dgram 0660 wifi wifi
