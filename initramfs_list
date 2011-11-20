@@ -31,6 +31,9 @@ file /sbin/adbd ${INITRAMFS_SOURCE_PATH}/sbin/adbd 0755 0 0
 file /sbin/fix_permissions ${INITRAMFS_SOURCE_PATH}/sbin/fix_permissions 0755 0 0
 file /sbin/nandroid-md5.sh ${INITRAMFS_SOURCE_PATH}/sbin/nandroid-md5.sh 0755 0 0
 file /sbin/remount ${INITRAMFS_SOURCE_PATH}/sbin/remount 0755 0 0
+file /sbin/killrecovery.sh ${INITRAMFS_SOURCE_PATH}/sbin/killrecovery.sh 0755 0 0
+file /sbin/sdparted ${INITRAMFS_SOURCE_PATH}/sbin/sdparted 0755 0 0
+file /sbin/parted ${INITRAMFS_SOURCE_PATH}/sbin/parted 0755 0 0
 slink /sbin/ueventd /init 0755 0 0
 
 # /res
