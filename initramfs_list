@@ -46,6 +46,9 @@ file /res/images/icon_error.png ${INITRAMFS_SOURCE_PATH}/res/images/icon_error.p
 file /res/images/icon_installing.png ${INITRAMFS_SOURCE_PATH}/res/images/icon_installing.png 0644 0 0
 file /res/images/progress_fill.png ${INITRAMFS_SOURCE_PATH}/res/images/progress_fill.png 0644 0 0
 file /res/images/progress_empty.png ${INITRAMFS_SOURCE_PATH}/res/images/progress_empty.png 0644 0 0
+file /res/images/icon_firmware_install.png ${INITRAMFS_SOURCE_PATH}/res/images/icon_firmware_install.png 0644 0 0
+file /res/images/icon_firmware_error.png ${INITRAMFS_SOURCE_PATH}/res/images/icon_firmware_error.png 0644 0 0
+file /res/keys ${INITRAMFS_SOURCE_PATH}/res/keys 0644 0 0
 
 # /system
 dir /system/etc 0755 0 0
