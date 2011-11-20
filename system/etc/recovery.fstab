@@ -5,3 +5,4 @@
 /cache		ubifs		/dev/ubi2_0
 #/efs		ubifs		/dev/ubi3_0
 /sdcard		vfat		/dev/block/mmcblk0p1
+/sd-ext		ext3		/dev/block/mmcblk0p2
