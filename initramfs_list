@@ -11,6 +11,7 @@ file /recovery.rc ${INITRAMFS_SOURCE_PATH}/recovery.rc 0644 0 0
 file /init ${INITRAMFS_SOURCE_PATH}/init 0755 0 0
 file /init.rc ${INITRAMFS_SOURCE_PATH}/init.rc 0644 0 0
 file /init.spica.rc ${INITRAMFS_SOURCE_PATH}/init.spica.rc 0644 0 0
+file /init.spica.usb.rc ${INITRAMFS_SOURCE_PATH}/init.spica.usb.rc 0644 0 0
 file /ueventd.goldfish.rc ${INITRAMFS_SOURCE_PATH}/ueventd.goldfish.rc 0644 0 0
 file /ueventd.rc ${INITRAMFS_SOURCE_PATH}/ueventd.rc 0644 0 0
 file /ueventd.spica.rc ${INITRAMFS_SOURCE_PATH}/ueventd.spica.rc 0644 0 0
