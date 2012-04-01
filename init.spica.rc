@@ -62,11 +62,6 @@ on fs
     chown system system /sys/class/backlight/s6d05a-lcd/brightness
 
 on post-fs
-    # load modules
-    insmod /lib/modules/s3c_g2d.ko
-    insmod /lib/modules/s3c_g3d.ko
-    insmod /lib/modules/dpram.ko
-
     # remove /sbin/sh so that "adb install" can work properly
     exec /sbin/setupenv.sh
 
