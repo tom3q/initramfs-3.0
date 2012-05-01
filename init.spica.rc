@@ -332,6 +332,20 @@ service dumpstate /system/bin/dumpstate -s
     disabled
     oneshot
 
+service crashguard /system/bin/crashguard
+
+on property:sys.shutdown.requested=0
+    stop crashguard
+
+on property:sys.shutdown.requested=1
+    stop crashguard
+
+on property:sys.shutdown.requested=1recovery
+    stop crashguard
+
+on property:sys.shutdown.requested=1bootloader
+    stop crashguard
+
 service console /bin/sh
     console
     disabled
