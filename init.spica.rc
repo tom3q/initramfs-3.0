@@ -48,8 +48,26 @@ on fs
     mount ubifs /dev/ubi3_0 /efs rw sync
     chown radio radio /efs
     chmod 775 /efs
-    chmod 770 /efs/bluetooth
-    chmod 770 /efs/imei
+    chown radio radio /efs/nv_data.bin
+    chmod 664 /efs/nv_data.bin
+    chown radio radio /efs/imei
+    chmod 775 /efs/imei
+    chown radio radio /efs/imei/bt.txt
+    chmod 664 /efs/imei/bt.txt
+    chown radio radio /efs/imei/mps_code.dat
+    chmod 664 /efs/imei/mps_code.dat
+    chown radio radio /efs/root
+    chmod 775 /efs/root
+    chown radio radio /efs/root/GSMStoredCellList
+    chmod 664 /efs/root/GSMStoredCellList
+    chown radio radio /efs/root/UimReset.Txt
+    chmod 664 /efs/root/UimReset.Txt
+    chown radio radio /efs/root/LSM
+    chmod 775 /efs/root/LSM
+    chown radio radio /efs/root/LSM/CellDBFile
+    chmod 664 /efs/root/LSM/CellDBFile
+    chown radio radio /efs/root/LSM/XtracorrFile
+    chmod 664 /efs/root/LSM/XtracorrFile
 
 # permissions for bluetooth.
 #    chown bluetooth bluetooth /efs/bluetooth
