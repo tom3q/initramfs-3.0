@@ -25,6 +25,7 @@ file /lib/modules/bcmdhd.ko ${INITRAMFS_SOURCE_PATH}/lib/modules/bcmdhd.ko 0644 
 # /sbin
 file /sbin/recovery ${INITRAMFS_SOURCE_PATH}/sbin/recovery 0755 0 0
 file /sbin/adbd ${INITRAMFS_SOURCE_PATH}/sbin/adbd 0755 0 0
+file /sbin/crashguard ${INITRAMFS_SOURCE_PATH}/sbin/crashguard 0755 0 0
 file /sbin/fix_permissions ${INITRAMFS_SOURCE_PATH}/sbin/fix_permissions 0755 0 0
 file /sbin/nandroid-md5.sh ${INITRAMFS_SOURCE_PATH}/sbin/nandroid-md5.sh 0755 0 0
 file /sbin/remount ${INITRAMFS_SOURCE_PATH}/sbin/remount 0755 0 0
